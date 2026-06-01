@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pastor Danny Aron Luiken</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --gold: #b8922e;
+  --gold-light: #d4a93a;
+  --black: #111111;
+  --dark: #f5f1ea;
+  --dark2: #ede8df;
+  --white: #111111;
+  --text: #555555;
+}
+html, body { margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }
+body {
+  background: #ffffff;
+  color: #111111; caret-color: #111111;
+  font-family: 'Cormorant Garamond', serif;
+  overflow-x: hidden;
+}
+
+/* ═══ PAGES ═══ */
+.page { display: none; min-height: 100vh; animation: pageIn 0.45s ease both; }
+.page.active { display: block; }
+@keyframes pageIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+/* ═══ TOPBAR ═══ */
+#topbar {
+  position: fixed; top:0; left:0; right:0; z-index:1000;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 32px;
+  background: rgba(255,255,255,0.96);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  backdrop-filter: blur(10px);
+}
+.logo-wrap { cursor: pointer; line-height:1; }
+.logo-initials {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem; font-weight: 900;
+  color: #111111; letter-spacing: 6px;
+  line-height: 1; display: block;
+}
+.logo-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.55rem; font-weight: 300;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: #888888; display: block; margin-top: 4px;
+}
+.hamburger {
+  background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; gap: 8px; padding: 6px;
+}
+.hamburger span {
+  display: block; width: 26px; height: 1px;
+  background: #111111;
+}
+
+/* ═══ MENU OVERLAY ═══ */
+#menuOverlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(8,8,8,0.98);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+#menuOverlay.open { opacity:1; pointer-events: all; }
+.menu-close {
+  position: absolute; top:20px; right:32px;
+  background: none; border: none; color: var(--gold);
+  font-size: 1.7rem; cursor: pointer;
+}
+.menu-link {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3.2vw, 2.4rem);
+  font-weight: 700; color: #111111; caret-color: #111111;
+  text-decoration: none; padding: 9px 0;
+  transition: color 0.25s; text-align: center; display: block;
+  cursor: pointer;
+}
+.menu-link:hover { color: var(--gold); }
+.menu-divider {
+  width: 44px; height: 1px; background: rgba(255,255,255,0.15); margin: 14px 0;
+}
+.menu-socials {
+  display: flex; gap: 24px; margin-top: 6px;
+}
+.menu-socials a {
+  font-family: 'Montserrat', sans-serif; font-size: 0.6rem;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text); text-decoration: none; transition: color 0.25s;
+}
+.menu-socials a:hover { color: var(--gold); }
+
+/* ═══ HOME ═══ */
+#page-home {
+  display: block;
+  padding-top: 74px;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.home-dm {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(5rem, 14vw, 10rem);
+  font-weight: 900; color: var(--gold);
+  letter-spacing: 20px; line-height: 1;
+  text-align: center;
+  padding: 44px 20px 8px;
+  animation: fadeSlideDown 0.8s both;
+}
+@keyframes fadeSlideDown { from{opacity:0;transform:translateY(-18px)} to{opacity:1;transform:translateY(0)} }
+
+.home-photo {
+  width: 100%;
+  height: 75vh;
+  background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1400&q=85') center 20%/cover no-repeat;
+  position: relative;
+  animation: fadeIn 1s 0.25s both;
+}
+.home-photo-grad {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(8,8,8,0.1) 0%, rgba(8,8,8,0.75) 100%);
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+/* Cards */
+.home-cards {
+  width: 100%; max-width: 860px;
+  display: flex; flex-direction: column; gap: 18px;
+  padding: 56px 28px;
+  animation: fadeIn 1s 0.4s both;
+}
+.home-card {
+  position: relative; overflow: hidden;
+  height: 220px; cursor: pointer;
+  border: 1px solid rgba(201,168,76,0.15);
+  transition: border-color 0.3s, transform 0.3s;
+}
+.home-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+.card-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  filter: brightness(0.3);
+  transition: filter 0.4s, transform 0.4s;
+}
+.home-card:hover .card-bg { filter: brightness(0.45); transform: scale(1.04); }
+.card-inner {
+  position: relative; z-index: 2;
+  height: 100%; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+  padding: 20px;
+}
+.card-label {
+  font-family: 'Montserrat', sans-serif; font-size: 0.58rem;
+  letter-spacing: 5px; text-transform: uppercase; color: var(--gold);
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700; color: #111111; letter-spacing: 3px;
+}
+.card-cta {
+  font-family: 'Montserrat', sans-serif; font-size: 0.58rem;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
+  opacity: 0; transform: translateY(6px); transition: all 0.3s;
+}
+.home-card:hover .card-cta { opacity:1; transform:translateY(0); }
+
+/* Quote */
+.home-quote {
+  width: 100%; max-width: 860px;
+  padding: 30px 40px 80px;
+  text-align: center;
+  animation: fadeIn 1s 0.6s both;
+}
+.quote-rule { width: 36px; height: 1px; background: var(--gold); margin: 0 auto 28px; }
+.quote-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem, 3vw, 2.2rem);
+  font-weight: 400; font-style: italic;
+  color: #f4efe6; line-height: 1.55;
+}
+.quote-attr {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.58rem; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--gold); margin-top: 18px;
+}
+
+/* ═══ INNER PAGES ═══ */
+.inner { padding: 110px 0 80px; }
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 32px; }
+.eyebrow {
+  font-family: 'Montserrat', sans-serif; font-size: 0.58rem;
+  letter-spacing: 5px; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 12px;
+}
+.pg-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 700; color: #111111; line-height: 1.1; margin-bottom: 22px;
+}
+.gold-rule { width: 56px; height: 1.5px; background: #111111; margin-bottom: 36px; }
+.body-p { font-size: 1.12rem; line-height: 1.9; color: #444444; margin-bottom: 18px; }
+.back {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Montserrat', sans-serif; font-size: 0.58rem;
+  letter-spacing: 3px; text-transform: uppercase; color: #888888;
+  cursor: pointer; background: none; border: none; margin-bottom: 36px;
+  transition: color 0.25s; padding: 0;
+}
+.back:hover { color: #111111; }
+
+/* BIO */
+.bio-img {
+  display: block;
+  width: 100vw;
+  height: 80vh;
+  background: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=1400&q=85') center 20%/cover;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  left: 0;
+}
+.badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+.badge {
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 7px 16px;
+  font-family: 'Montserrat', sans-serif; font-size: 0.58rem;
+  letter-spacing: 3px; text-transform: uppercase; color: var(--gold);
+}
+
+/* LINKS LIST (messages / socials) */
+.link-list { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+.link-row {
+  display: flex; align-items: center; gap: 20px;
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 22px 26px; text-decoration: none;
+  transition: all 0.3s;
+}
+.link-row:hover { border-color: var(--gold); background: rgba(201,168,76,0.03); }
+.link-icon { font-size: 1.8rem; width: 38px; text-align: center; flex-shrink: 0; }
+.link-info h3 { font-family:'Playfair Display',serif; font-size:1.25rem; color:#111111; margin-bottom:3px; }
+.link-info p { font-size:0.9rem; color:var(--text); }
+.link-arrow { margin-left:auto; color:var(--gold); font-size:1rem; flex-shrink:0; }
+
+/* CHURCH HERO */
+.church-img {
+  display: block;
+  width: 100vw;
+  height: 65vh;
+  background: url('https://images.unsplash.com/photo-1438232992991-995b671e0c30?w=1400&q=85') center/cover;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  left: 0;
+}
+.church-img::after {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(255,255,255,0.85) 100%);
+}
+
+/* BTNS */
+.btn-fill {
+  display: inline-block; background: var(--gold); color: var(--black);
+  padding: 15px 40px; font-family:'Montserrat',sans-serif;
+  font-size:0.68rem; letter-spacing:3px; text-transform:uppercase;
+  font-weight:700; text-decoration:none; cursor:pointer; border:none;
+  transition: background 0.3s;
+}
+.btn-fill:hover { background: var(--gold-light); }
+.btn-outline {
+  display: inline-block; border: 1px solid #111111; color: #111111; caret-color: #111111;
+  padding: 14px 38px; font-family:'Montserrat',sans-serif;
+  font-size:0.68rem; letter-spacing:3px; text-transform:uppercase;
+  background:none; text-decoration:none; cursor:pointer;
+  transition: all 0.3s;
+}
+.btn-outline:hover { background: #111111; color: #ffffff; }
+
+/* FORMS */
+.form-col { display: flex; flex-direction: column; gap: 18px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.fg { display: flex; flex-direction: column; gap: 7px; }
+.fg label {
+  font-family:'Montserrat',sans-serif; font-size:0.58rem;
+  letter-spacing:3px; text-transform:uppercase; color:var(--gold);
+}
+.fg input, .fg textarea, .fg select {
+  background: #f8f5f0; border: 1px solid rgba(0,0,0,0.15);
+  padding: 13px 16px; color: #111111; caret-color: #111111;
+  font-family:'Cormorant Garamond',serif; font-size:1.05rem;
+  outline: none; transition: border-color 0.3s; width: 100%;
+  -webkit-appearance: none;
+}
+.fg input:focus, .fg textarea:focus, .fg select:focus { border-color: #111111; }
+.fg textarea { resize: vertical; min-height: 120px; }
+.fg select option { background: #1a1a1a; }
+.success {
+  display: none; border: 1px solid var(--gold);
+  background: rgba(201,168,76,0.07);
+  padding: 14px 20px; margin-top: 16px;
+  font-family:'Cormorant Garamond',serif; font-size:1.1rem;
+  color: var(--gold); text-align: center;
+}
+
+/* DONATE */
+.donate-list { display: flex; flex-direction: column; gap: 12px; margin-bottom:36px; }
+.donate-row {
+  display: flex; align-items: center; gap: 18px;
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 20px 24px; text-decoration: none;
+  transition: all 0.3s; cursor: pointer;
+}
+.donate-row:hover { border-color:var(--gold); background:rgba(201,168,76,0.03); }
+.donate-row h4 { font-family:'Playfair Display',serif; font-size:1.15rem; color:#111111; margin-bottom:2px; }
+.donate-row p { font-size:0.88rem; color:var(--text); }
+.amounts { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0 30px; }
+.amt {
+  border: 1px solid rgba(0,0,0,0.2);
+  padding: 10px 22px;
+  font-family:'Playfair Display',serif; font-size:1rem; color:#111111;
+  cursor:pointer; background:none; transition:all 0.3s;
+}
+.amt:hover, .amt.on { background:var(--gold); color:var(--black); border-color:var(--gold); }
+
+/* EDU */
+.edu-list { display:flex; flex-direction:column; gap:0; margin-top:36px; }
+.edu-item { border-top:1px solid rgba(0,0,0,0.1); padding:26px 0; }
+.edu-item h4 { font-family:'Playfair Display',serif; font-size:1.3rem; color:var(--gold); margin-bottom:10px; }
+.edu-item p { font-size:1.05rem; line-height:1.85; color:var(--text); }
+
+/* EVENTS */
+.ev-list { display:flex; flex-direction:column; gap:0; margin-top:36px; }
+.ev-row {
+  display:grid; grid-template-columns:66px 1fr; gap:24px;
+  padding:26px 0; border-bottom:1px solid rgba(0,0,0,0.08); align-items:start;
+}
+.ev-date { text-align:center; }
+.ev-day { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; color:var(--gold); line-height:1; }
+.ev-mon { font-family:'Montserrat',sans-serif; font-size:0.52rem; letter-spacing:2px; text-transform:uppercase; color:var(--text); }
+.ev-name { font-family:'Playfair Display',serif; font-size:1.2rem; color:#111111; margin-bottom:5px; }
+.ev-detail { font-size:0.92rem; color:var(--text); }
+
+/* RESPONSIVE */
+@media(max-width:600px) {
+  #topbar { padding:12px 18px; }
+  .logo-initials { font-size:1.8rem; }
+  .home-dm { font-size: clamp(4rem,18vw,6rem); letter-spacing:10px; padding:36px 16px 6px; }
+  .home-photo { height:55vh; }
+  .home-cards { padding:36px 16px; gap:14px; }
+  .home-card { height:180px; }
+  .wrap { padding:0 18px; }
+  .form-row { grid-template-columns:1fr; }
+  .amounts { gap:8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="logo-wrap" onclick="go('home')">
+    <span class="logo-initials">DM</span>
+    <span class="logo-name">Danny Aron Luiken</span>
+  </div>
+  <button class="hamburger" onclick="openMenu()">
+    <span></span>
+    <span></span>
+  </button>
+</div>
+
+<!-- MENU OVERLAY -->
+<div id="menuOverlay">
+  <button class="menu-close" onclick="closeMenu()">✕</button>
+  <span class="menu-link" onclick="go('bio')">BIO</span>
+  <span class="menu-link" onclick="go('messages')">MESSAGES</span>
+  <span class="menu-link" onclick="go('invite')">INVITE</span>
+  <span class="menu-link" onclick="go('donate')">DONATE</span>
+  <span class="menu-link" onclick="go('story')">SHARE YOUR STORY</span>
+  <span class="menu-link" onclick="go('bible')">BIBLE TRANSLATION</span>
+  <span class="menu-link" onclick="go('education')">EDUCATION</span>
+  <span class="menu-link" onclick="go('events')">EVENTS</span>
+  <span class="menu-link" onclick="go('starchurch')">STARCHURCH</span>
+  <div class="menu-divider"></div>
+  <div class="menu-socials">
+    <a href="https://youtube.com" target="_blank">YouTube</a>
+    <a href="https://instagram.com" target="_blank">Instagram</a>
+    <a href="https://facebook.com" target="_blank">Facebook</a>
+    <a href="https://tiktok.com" target="_blank">TikTok</a>
+  </div>
+</div>
+
+<!-- ═══════════════ HOME ═══════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO: truly full bleed, no wrappers -->
+  <div style="position:relative;width:100%;height:100vh;overflow:hidden;margin:0;padding:0;display:block;">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1600&q=90') center 15%/cover no-repeat;animation:hZ 9s ease-out forwards;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to bottom,rgba(0,0,0,0.25) 0%,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.72) 100%);"></div>
+    <div style="position:absolute;bottom:54px;left:0;right:0;text-align:center;z-index:2;padding:0;">
+      <div style="width:40px;height:1px;background:#b8922e;margin:0 auto 16px;"></div>
+      <div style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,3.6rem);font-weight:700;color:#ffffff;letter-spacing:5px;line-height:1.1;">DANNY ARON LUIKEN</div>
+      <div style="font-family:'Montserrat',sans-serif;font-size:0.56rem;letter-spacing:5px;text-transform:uppercase;color:#b8922e;margin-top:12px;">Theologian · Engineer · Pastor</div>
+    </div>
+  </div>
+
+  <!-- BIO / MESSAGES / STARCHURCH cards -->
+  <div style="display:flex;width:100%;height:100vh;min-height:500px;margin:0;padding:0;">
+
+    <div onclick="go('bio')" style="flex:1;position:relative;cursor:pointer;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900&q=90') center 15%/cover no-repeat;transition:transform 0.5s;" id="bioPhotoLeft"></div>
+      <div style="position:absolute;inset:0;background:rgba(0,0,0,0.45);transition:background 0.4s;"></div>
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;z-index:2;">
+        <span style="font-family:'Montserrat',sans-serif;font-size:0.54rem;letter-spacing:5px;text-transform:uppercase;color:#b8922e;">About the Pastor</span>
+        <span style="font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;color:#ffffff;letter-spacing:3px;">BIO</span>
+        <span style="font-family:'Montserrat',sans-serif;font-size:0.52rem;letter-spacing:3px;text-transform:uppercase;color:#d4a93a;">View more →</span>
+      </div>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;">
+      <div onclick="go('messages')" style="flex:1;position:relative;cursor:pointer;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=800&q=85') center/cover no-repeat;filter:brightness(0.3);transition:filter 0.4s;" id="msgBg"></div>
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.3);"></div>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:2;">
+          <span style="font-family:'Montserrat',sans-serif;font-size:0.54rem;letter-spacing:5px;text-transform:uppercase;color:#b8922e;">Sermons & Teachings</span>
+          <span style="font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:#ffffff;letter-spacing:2px;">MESSAGES</span>
+        </div>
+      </div>
+      <div onclick="go('starchurch')" style="flex:1;position:relative;cursor:pointer;overflow:hidden;border-top:1px solid rgba(255,255,255,0.08);">
+        <div style="position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1438232992991-995b671e0c30?w=800&q=85') center/cover no-repeat;filter:brightness(0.28);transition:filter 0.4s;" id="churchBg"></div>
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.3);"></div>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;z-index:2;">
+          <span style="font-family:'Montserrat',sans-serif;font-size:0.54rem;letter-spacing:5px;text-transform:uppercase;color:#b8922e;">Our Church</span>
+          <span style="font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:#ffffff;letter-spacing:2px;">STARCHURCH</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- VISION TEXT -->
+  <div style="background:#ffffff;padding:90px 40px;text-align:center;">
+    <div style="max-width:680px;margin:0 auto;">
+      <div style="width:36px;height:1px;background:#b8922e;margin:0 auto 18px;"></div>
+      <p style="font-family:'Montserrat',sans-serif;font-size:0.56rem;letter-spacing:5px;text-transform:uppercase;color:#b8922e;margin-bottom:16px;">Our Vision</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.5vw,2.8rem);font-weight:700;color:#111;line-height:1.2;margin-bottom:26px;">This Is How We Want to Be Church</h2>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;line-height:1.95;color:#333;margin-bottom:18px;">We believe the church is not merely a place of worship, but a community that transforms, heals, and inspires. We are called to be present in our neighbourhood, our city, and our nation — not only on Sundays, but every single day.</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;line-height:1.95;color:#333;margin-bottom:18px;">We want to be a church that meets people where they are, guides them toward who they are called to be, and equips them to fulfil their purpose — in faith, in work, in relationships, and in education. We play an active role in education and support, because faith without action is empty.</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;line-height:1.95;color:#555;font-style:italic;">Being a church community means: growing together, serving together, building something greater than ourselves.</p>
+    </div>
+  </div>
+
+  <!-- YOUTUBE VIDEO: full bleed like the hero image -->
+  <div style="background:#ffffff;padding:60px 0 0;">
+    <div style="text-align:center;padding:0 0 28px;">
+      <p style="font-family:'Montserrat',sans-serif;font-size:0.56rem;letter-spacing:5px;text-transform:uppercase;color:#b8922e;margin-bottom:10px;">Watch</p>
+      <h3 style="font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;color:#111111;margin:0;">Latest Message</h3>
+    </div>
+    <!-- Video: same pattern as hero — position relative, padding-bottom for ratio, iframe absolute inset -->
+    <div style="position:relative;width:100%;padding-bottom:56.25%;height:0;overflow:hidden;display:block;">
+      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+        title="Pastor Danny Aron Luiken"
+        style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;margin:0;padding:0;"
+        allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+    <div style="text-align:center;padding:22px 0 50px;">
+      <a href="https://youtube.com/@pastordannyaronluiken" target="_blank"
+         style="font-family:'Montserrat',sans-serif;font-size:0.58rem;letter-spacing:3px;text-transform:uppercase;color:#b8922e;text-decoration:none;border-bottom:1px solid rgba(184,146,46,0.4);padding-bottom:2px;">
+        Watch all videos on YouTube →
+      </a>
+    </div>
+  </div>
+
+  <!-- QUOTE: white bg, black text -->
+  <div style="background:#ffffff;padding:80px 40px;text-align:center;border-top:1px solid rgba(0,0,0,0.07);">
+    <div style="width:36px;height:1px;background:#111111;margin:0 auto 26px;"></div>
+    <p style="font-family:'Playfair Display',serif;font-size:clamp(1.4rem,3vw,2.3rem);font-style:italic;color:#111111;line-height:1.55;max-width:640px;margin:0 auto;">"In every moment — run to Jesus."</p>
+    <p style="font-family:'Montserrat',sans-serif;font-size:0.56rem;letter-spacing:4px;text-transform:uppercase;color:#888888;margin-top:20px;">— Pastor Danny Aron Luiken</p>
+  </div>
+
+  <!-- SOCIALS: white bg, small compact tiles -->
+  <div style="background:#ffffff;border-top:1px solid rgba(0,0,0,0.07);padding:44px 40px 60px;text-align:center;">
+    <p style="font-family:'Montserrat',sans-serif;font-size:0.52rem;letter-spacing:5px;text-transform:uppercase;color:#aaa;margin-bottom:20px;">Follow Along</p>
+    <div style="display:inline-flex;gap:0;flex-wrap:wrap;justify-content:center;">
+      <a href="https://instagram.com/pastordannyaronluiken" target="_blank"
+         style="display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
+                width:120px;height:96px;border:1px solid rgba(0,0,0,0.1);
+                text-decoration:none;transition:all 0.3s;background:#fff;"
+         onmouseover="this.style.background='#f9f6f1';this.style.borderColor='#b8922e'"
+         onmouseout="this.style.background='#fff';this.style.borderColor='rgba(0,0,0,0.1)'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#b8922e"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8 0 3.2 0 3.6-.1 4.8-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1-3.2 0-3.6 0-4.8-.1-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12c0-3.2 0-3.6.1-4.8C2.4 3.9 4 2.3 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12c0 3.3 0 3.7.1 4.9.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24c3.3 0 3.7 0 4.9-.1 4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9 0-3.3 0-3.7-.1-4.9C23.7 2.7 21.3.3 16.9.1 15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4A6.2 6.2 0 0 0 12 5.8zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8z"/></svg>
+        <span style="font-family:'Montserrat',sans-serif;font-size:0.48rem;letter-spacing:2px;text-transform:uppercase;color:#555;">Instagram</span>
+      </a>
+      <a href="https://youtube.com/@pastordannyaronluiken" target="_blank"
+         style="display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
+                width:120px;height:96px;border:1px solid rgba(0,0,0,0.1);border-left:none;
+                text-decoration:none;transition:all 0.3s;background:#fff;"
+         onmouseover="this.style.background='#f9f6f1';this.style.borderColor='#b8922e'"
+         onmouseout="this.style.background='#fff';this.style.borderColor='rgba(0,0,0,0.1)'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#b8922e"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6a3 3 0 0 0-2.1 2.1C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+        <span style="font-family:'Montserrat',sans-serif;font-size:0.48rem;letter-spacing:2px;text-transform:uppercase;color:#555;">YouTube</span>
+      </a>
+      <a href="https://tiktok.com/@pastordannyaronluiken" target="_blank"
+         style="display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;
+                width:120px;height:96px;border:1px solid rgba(0,0,0,0.1);border-left:none;
+                text-decoration:none;transition:all 0.3s;background:#fff;"
+         onmouseover="this.style.background='#f9f6f1';this.style.borderColor='#b8922e'"
+         onmouseout="this.style.background='#fff';this.style.borderColor='rgba(0,0,0,0.1)'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#b8922e"><path d="M12.5 0h3.6c.2 2.6 1.6 4.9 4 5.5v3.5c-1.5 0-3.1-.5-4.4-1.4v6.2c0 3.5-2.8 6.3-6.3 6.3a6.3 6.3 0 0 1-6.3-6.3 6.3 6.3 0 0 1 9.4-5.5V11c-.6-.4-1.3-.5-2-.5a3.2 3.2 0 0 0-3.2 3.2 3.2 3.2 0 0 0 3.2 3.2 3.2 3.2 0 0 0 3.2-3.2L12.5 0z"/></svg>
+        <span style="font-family:'Montserrat',sans-serif;font-size:0.48rem;letter-spacing:2px;text-transform:uppercase;color:#555;">TikTok</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════ BIO ═══════════════ -->
+<div id="page-bio" class="page">
+  <!-- top padding for topbar -->
+  <div style="padding-top:74px;"></div>
+  <!-- FULL WIDTH IMAGE -->
+  <div class="bio-img"></div>
+  <!-- TEXT CONTENT inside wrap -->
+  <div style="max-width:780px;margin:0 auto;padding:56px 32px 80px;">
+    <button class="back" onclick="go('home')">← Back</button>
+    <p class="eyebrow">About Him</p>
+    <h1 class="pg-title">Pastor Danny<br>Aron Luiken</h1>
+    <div class="gold-rule"></div>
+    <p class="body-p">Pastor Danny Aron Luiken is a theologian, engineer and pastor — a remarkable combination that enables him to connect faith and reason in a unique way. With a deeply rooted faith and an analytical mind, he brings the Word of God with power, clarity and depth.</p>
+    <p class="body-p">As a pastor, Danny believes the church is more than a building — it is a community, a movement, a place of transformation. His mission: to awaken people to their destiny, rooted in the gospel of Jesus Christ.</p>
+    <p class="body-p">With his background in both theology and engineering, he builds bridges between faith and society — in the church, in education and in the world. He believes God calls people with everything they are, including their skills and experience, to build the Kingdom.</p>
+    <div class="badges">
+      <span class="badge">Theologian</span>
+      <span class="badge">Engineer</span>
+      <span class="badge">Pastor</span>
+      <span class="badge">Speaker</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MESSAGES ═══════════════ -->
+<div id="page-messages" class="page">
+  <div class="inner">
+    <div class="wrap">
+      <button class="back" onclick="go('home')">← Terug</button>
+      <p class="eyebrow">Preken &amp; Teachings</p>
+      <h1 class="pg-title">Messages</h1>
+      <div class="gold-rule"></div>
+      <p class="body-p">Luister en bekijk de boodschappen van Pastor Danny Aron Luiken via de platforms hieronder. Van volledige preken tot dagelijkse inspiratie.</p>
+      <div class="link-list">
+        <a class="link-row" href="https://youtube.com/@pastordannyaronluiken" target="_blank">
+          <span class="link-icon">▶</span>
+          <div class="link-info"><h3>YouTube</h3><p>Volledige preken, series en live diensten</p></div>
+          <span class="link-arrow">→</span>
+        </a>
+        <a class="link-row" href="https://instagram.com/pastordannyaronluiken" target="_blank">
+          <span class="link-icon">◈</span>
+          <div class="link-info"><h3>Instagram</h3><p>Dagelijkse inspiratie, reels en stories</p></div>
+          <span class="link-arrow">→</span>
+        </a>
+        <a class="link-row" href="https://tiktok.com/@pastordannyaronluiken" target="_blank">
+          <span class="link-icon">♪</span>
+          <div class="link-info"><h3>TikTok</h3><p>Korte krachtige boodschappen</p></div>
+          <span class="link-arrow">→</span>
+        </a>
+        <a class="link-row" href="https://facebook.com/pastordannyaronluiken" target="_blank">
+          <span class="link-icon">ƒ</span>
+          <div class="link-info"><h3>Facebook</h3><p>Live streams en gemeenschapsupdates</p></div>
+          <span class="link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STARCHURCH ═��═════════════ -->
+<div id="page-starchurch" class="page">
+  <div style="padding-top:74px;"></div>
+  <div class="church-img"></div>
+  <div style="max-width:780px;margin:0 auto;padding:56px 32px 80px;">
+    <button class="back" onclick="go('home')">← Back</button>
+    <p class="eyebrow">Our Church</p>
+    <h1 class="pg-title">StarChurch</h1>
+    <div class="gold-rule"></div>
+    <p class="body-p">StarChurch is a vibrant church community where people from all backgrounds come together to worship God, grow and find community. We are a place of encounter, restoration and destiny.</p>
+    <p class="body-p">We want to be a church that meets people where they are, guides them toward who they are called to be, and equips them to fulfil their purpose — in faith, in work, in relationships and in society. Not only on Sundays, but every single day of the week.</p>
+    <p class="body-p">We believe in being a church in the middle of society — present in the neighbourhood, involved in education, helping where help is needed, and speaking where others stay silent.</p>
+    <br>
+    <a class="btn-fill" href="https://starchurch.nl" target="_blank">Visit starchurch.nl →</a>
+  </div>
+</div>
+
+<!-- ═══════════════ INVITE ═══════════════ -->
+<div id="page-invite" class="page">
+  <div class="inner">
+    <div class="wrap">
+      <button class="back" onclick="go('home')">← Terug</button>
+      <p class="eyebrow">Uitnodiging</p>
+      <h1 class="pg-title">Invite</h1>
+      <div class="gold-rule"></div>
+      <p class="body-p">Wil je Pastor Danny Aron Luiken uitnodigen om te spreken in jouw kerk, conferentie of evenement? Vul het formulier in en we nemen zo spoedig mogelijk contact met je op.</p>
+      <form onsubmit="sent(event,'inv-ok')">
+        <div class="form-col">
+          <div class="form-row">
+            <div class="fg"><label>Voornaam *</label><input type="text" placeholder="Voornaam" required></div>
+            <div class="fg"><label>Achternaam *</label><input type="text" placeholder="Achternaam" required></div>
+          </div>
+          <div class="form-row">
+            <div class="fg"><label>E-mail *</label><input type="email" placeholder="jouw@email.nl" required></div>
+            <div class="fg"><label>Telefoon</label><input type="tel" placeholder="+31 6 ..."></div>
+          </div>
+          <div class="fg"><label>Kerk / Organisatie *</label><input type="text" placeholder="Naam van jouw kerk of organisatie" required></div>
+          <div class="form-row">
+            <div class="fg">
+              <label>Type evenement</label>
+              <select>
+                <option>Zondagsdienst</option>
+                <option>Conferentie</option>
+                <option>Youth Event</option>
+                <option>Speciale bijeenkomst</option>
+                <option>Anders</option>
+              </select>
+            </div>
+            <div class="fg"><label>Gewenste datum(s)</label><input type="text" placeholder="bv. 15 juni 2025"></div>
+          </div>
+          <div class="fg"><label>Locatie / Stad</label><input type="text" placeholder="Stad, Land"></div>
+          <div class="fg"><label>Toelichting</label><textarea placeholder="Thema, verwachte opkomst, bijzonderheden..."></textarea></div>
+          <div>
+            <button type="submit" class="btn-outline">Verstuur Uitnodiging</button>
+            <div class="success" id="inv-ok">✓ Bedankt! We nemen zo spoedig mogelijk contact met je op.</div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DONATE ═══════════════ -->
+<div id="page-donate" class="page">
+  <div class="inner">
+    <div class="wrap">
+      <button class="back" onclick="go('home')">← Terug</button>
+      <p class="eyebrow">Geef</p>
+      <h1 class="pg-title">Donate</h1>
+      <div class="gold-rule"></div>
+      <p class="body-p">Jouw gift maakt het mogelijk om het evangelie te verspreiden, gemeenschappen te dienen en de volgende generatie te ondersteunen. Elk bedrag telt.</p>
+
+      <p style="font-family:'Montserrat',sans-serif;font-size:0.58rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Kies een bedrag</p>
+      <div class="amounts">
+        <button class="amt" onclick="pick(this)">€ 10</button>
+        <button class="amt on" onclick="pick(this)">€ 25</button>
+        <button class="amt" onclick="pick(this)">€ 50</button>
+        <button class="amt" onclick="pick(this)">€ 100</button>
+        <button class="amt" onclick="pick(this)">Eigen bedrag</button>
+      </div>
+
+      <p style="font-family:'Montserrat',sans-serif;font-size:0.58rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">Betaalmethode</p>
+      <div class="donate-list">
+        <a class="donate-row" href="https://paypal.com" target="_blank">
+          <span style="font-size:1.6rem;flex-shrink:0;">🅿</span>
+          <div><h4>PayPal</h4><p>Snel en veilig betalen via PayPal</p></div>
+          <span style="margin-left:auto;color:var(--gold);">→</span>
+        </a>
+        <a class="donate-row" href="#" onclick="alert('iDEAL betalingspagina')">
+          <span style="font-size:1.6rem;flex-shrink:0;">🏦</span>
+          <div><h4>iDEAL</h4><p>Betaal via jouw Nederlandse bank</p></div>
+          <span style="margin-left:auto;color:var(--gold);">→</span>
+        </a>
+        <a class="donate-row" href="#" onclick="alert('Creditcard betalingspagina')">
+          <span style="font-size:1.6rem;flex-shrink:0;">💳</span>
+          <div><h4>Creditcard / Debitcard</h4><p>Visa, Mastercard en meer</p></div>
+          <span style="margin-left:auto;color:var(--gold);">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ STORY ═══════════════ -->
+<div id="page-story" class="page">
+  <div class="inner">
+    <div class="wrap">
+      <button class="back" onclick="go('home')">← Terug</button>
+      <p class="eyebrow">Getuigenissen</p>
+      <h1 class="pg-title">Share Your Story</h1>
+      <div class="gold-rule"></div>
+      <p class="body-p">Heeft God iets bijzonders in jouw leven gedaan? Deel jouw getuigenis. Jouw verhaal kan anderen inspireren, bemoedigen en laten zien dat God levens verandert.</p>
+      <form onsubmit="sent(event,'story-ok')">
+        <div class="form-col">
+          <div class="form-row">
+            <div class="fg"><label>Voornaam *</label><input type="text" placeholder="Voornaam" required></div>
+            <div class="fg"><label>Achternaam *</label><input type="text" placeholder="Achternaam" required></div>
+          </div>
+          <div class="fg"><label>E-mail *</label><input type="email" placeholder="jouw@email.nl" required></div>
+          <div class="fg">
+            <label>Jouw verhaal *</label>
+            <textarea style="min-height:190px;" placeholder="Hoe heeft God gewerkt in jouw leven? Deel het hier..." required></textarea>
+          </div>
+          <div class="fg">
+            <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;text-transform:none;letter-spacing:0;">
+              <input type="checkbox" style="width:auto;flex-shrink:0;margin-top:3px;">
+              <span style="font-family:'Montserrat',sans-serif;font-size:0.62rem;color:var(--text);font-weight:300;letter-spacing:0.5px;">Ik geef toestemming om mijn verhaal eventueel anoniem te delen via sociale media of in diensten.</span>
+            </label>
+          </div>
+          <div>
+            <button type="submit" class="btn-outline">Deel Mijn Verhaal</button>
+            <div class="success" id="story-ok">✓ Dank je! Jouw verhaal is ontvangen en maakt een verschil.</div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ BIBLE ═══════════════ -->
+<div id="page-bible" class="page">
+  <div class="inner">
+    <div class="wrap">
+      <button class="back" onclick="go('home')">← Terug</button>
+      <p class="eyebrow">Het Woord</p>
+      <h1 class="pg-title">Bible Translation</h1>
+      <div class="gold-rule"></div>
+      <p class="body-p">Vanuit een diepe overtuiging dat het Woord van God toegankelijk moet zijn voor iedereen, werkt Pastor Danny Aron Luiken aan een eigen bijbelse vertaling en uitleg.</p>
+      <p class="body-p">De vertaling is geschreven vanuit theologische diepgang en het hart van een herder — voor mensen van nu. Elke passage wordt voorzien van context, historische achtergrond en praktische toepassing voor het leven van vandaag.</p>
+      <p class="body-p">Zodat het Woord niet alleen gelezen wordt, maar ook begrepen en geleefd. De hartslag van God richting de mensheid, helder en krachtig verwoord.</p>
+      <br>
+      <a class="btn-outline" href="#">Ontdek de Vertaling</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ EDUCATION ═══════════════ -->
+<div id="page-education" class="page">
+  <div class="inner">
+    <div class="wrap">
+      <button class="back" onclick="go('home')">← Terug</button>
+      <p class="eyebrow">Onderwijs</p>
+      <h1 class="pg-title">Education</h1>
+      <div class="gold-rule"></div>
+      <p class="body-p">Wij geloven dat elk kind en elke student het verdient om te groeien, te leren en te excelleren. Vanuit die overtuiging investeren wij actief in onderwijs, begeleiding en persoonlijke ontwikkeling.</p>
+      <div class="edu-list">
+        <div class="edu-item">
+          <h4>Leerlingbegeleiding</h4>
+          <p>Huiswerkondersteuning, studiebegeleiding en mentoring voor leerlingen in het basis- en voortgezet onderwijs. Een veilige plek om te groeien — academisch en als mens.</p>
+        </div>
+        <div class="edu-item">
+          <h4>Studentmentoring</h4>
+          <p>Persoonlijke begeleiding voor HBO- en WO-studenten op het gebied van studie, geloof, identiteit en toekomstvisie. Want wie je bent bepaalt wat je bouwt.</p>
+        </div>
+        <div class="edu-item">
+          <h4>Theologische Vorming</h4>
+          <p>Bijbelstudies, leerscholen en discipleship-programma's voor iedereen die dieper wil groeien in geloof en kennis van het Woord van God.</p>
+        </div>
+        <div class="edu-item">
+          <h4>Workshops &amp; Trainingen</h4>
+          <p>Praktische workshops op het snijvlak van geloof, wetenschap, leiderschap en samenleving — om mensen uit te rusten voor hun roeping.</p>
+        </div>
+      </div>
+      <br><br>
+      <a class="btn-outline" href="#">Aanmelden voor Begeleiding</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ EVENTS ═══════════════ -->
+<div id="page-events" class="page">
+  <div class="inner">
+    <div class="wrap">
+      <button class="back" onclick="go('home')">← Terug</button>
+      <p class="eyebrow">Agenda</p>
+      <h1 class="pg-title">Events</h1>
+      <div class="gold-rule"></div>
+      <p class="body-p">Ontdek aankomende diensten, conferenties en speciale evenementen. Iedereen is van harte welkom.</p>
+      <div class="ev-list">
+        <div class="ev-row">
+          <div class="ev-date"><div class="ev-day">15</div><div class="ev-mon">Mrt</div></div>
+          <div><div class="ev-name">Zondagsdienst — StarChurch</div><div class="ev-detail">10:00 &amp; 17:00 uur · StarChurch, Amsterdam</div></div>
+        </div>
+        <div class="ev-row">
+          <div class="ev-date"><div class="ev-day">22</div><div class="ev-mon">Mrt</div></div>
+          <div><div class="ev-name">Youth Night — Generatie Z</div><div class="ev-detail">19:30 uur · StarChurch</div></div>
+        </div>
+        <div class="ev-row">
+          <div class="ev-date"><div class="ev-day">05</div><div class="ev-mon">Apr</div></div>
+          <div><div class="ev-name">Conferentie — Grounded &amp; Fearless</div><div class="ev-detail">09:00–18:00 uur · Nader te bepalen locatie</div></div>
+        </div>
+        <div class="ev-row">
+          <div class="ev-date"><div class="ev-day">19</div><div class="ev-mon">Apr</div></div>
+          <div><div class="ev-name">Paas-Special — Opgestaan</div><div class="ev-detail">10:00 uur · StarChurch · Live muziek &amp; gasten</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const allPages = ['home','bio','messages','starchurch','invite','donate','story','bible','education','events'];
+
+function go(name) {
+  closeMenu();
+  allPages.forEach(p => {
+    const el = document.getElementById('page-'+p);
+    if(el){ el.classList.remove('active'); el.style.display='none'; }
+  });
+  const t = document.getElementById('page-'+name);
+  if(t){ t.style.display='block'; setTimeout(()=>t.classList.add('active'),10); }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function openMenu(){
+  document.getElementById('menuOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeMenu(){
+  document.getElementById('menuOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function sent(e, id){
+  e.preventDefault();
+  const el=document.getElementById(id);
+  el.style.display='block';
+  e.target.reset();
+  setTimeout(()=>{ el.style.display='none'; },5000);
+}
+
+function pick(btn){
+  document.querySelectorAll('.amt').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+</script>
+</body>
+</html>
