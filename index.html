@@ -9,85 +9,825 @@
 :root {
   --blue: #1a73e8;
   --blue-dark: #1557b0;
+  --blue-light: #e8f0fe;
+  --green: #34a853;
+  --green-light: #e6f4ea;
   --text: #1f2937;
   --muted: #6b7280;
   --light: #f9fafb;
   --white: #ffffff;
   --border: #e5e7eb;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.10);
 }
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--text); font-size: 16px; line-height: 1.6; }
-.hero { padding: 5rem 5%; text-align: center; background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 60%); }
-.hero h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 1.2rem; }
-.hero p { font-size: 1.05rem; color: var(--muted); margin-bottom: 2rem; }
-.btn { padding: 0.8rem 1.8rem; background: var(--blue); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
-.btn:hover { background: var(--blue-dark); }
-.stats { background: var(--blue); color: white; padding: 2.5rem 5%; display: flex; justify-content: center; gap: 5rem; flex-wrap: wrap; }
-.stat { text-align: center; }
-.stat-num { font-size: 2.2rem; font-weight: 800; }
-footer { background: var(--text); color: rgba(255,255,255,0.7); padding: 3rem 5%; text-align: center; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--white);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
 a { text-decoration: none; color: inherit; }
+
+.topbar {
+  background: var(--blue);
+  color: white;
+  text-align: center;
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.topbar a { color: white; text-decoration: underline; }
+
+.logos-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 500;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+}
+
+.logos-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
+}
+
+.logos-brand {
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #111;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.logos-nav-links {
+  display: flex;
+  list-style: none;
+  gap: 0;
+}
+
+.logos-nav-links li a {
+  display: block;
+  padding: 0 1.1rem;
+  height: 64px;
+  line-height: 64px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #444;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: color 0.15s, border-bottom 0.15s;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+
+.logos-nav-links li a:hover,
+.logos-nav-links li a.active {
+  color: #111;
+  border-bottom-color: #111;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+.hero {
+  background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 60%);
+  padding: 5rem 5% 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--green-light);
+  color: var(--green);
+  padding: 0.35rem 0.9rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 1.2rem;
+  color: var(--text);
+}
+
+.hero h1 .blue { color: var(--blue); }
+
+.hero p {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.hero-cta { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
+
+.btn-hero {
+  padding: 0.8rem 1.8rem;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.btn-hero:hover {
+  background: var(--blue-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(26,115,232,0.3);
+}
+
+.btn-ghost {
+  padding: 0.8rem 1.8rem;
+  background: white;
+  color: var(--blue);
+  border: 1.5px solid var(--blue);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-ghost:hover { background: var(--blue-light); }
+
+.hero-trust {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.stars-inline { color: #f59e0b; font-size: 1rem; }
+
+.hero-image {
+  background: linear-gradient(135deg, #dbeafe, #ede9fe);
+  border-radius: 20px;
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.stats-bar {
+  background: var(--blue);
+  padding: 2.5rem 5%;
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+  flex-wrap: wrap;
+}
+
+.stat { text-align: center; color: white; }
+.stat-num { font-size: 2.2rem; font-weight: 800; line-height: 1; }
+.stat-label { font-size: 0.85rem; opacity: 0.85; margin-top: 0.3rem; }
+
+.section { padding: 5rem 5%; max-width: 1200px; margin: 0 auto; }
+.section-gray { background: var(--light); }
+
+.section-tag {
+  display: inline-block;
+  background: var(--blue-light);
+  color: var(--blue);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border-radius: 100px;
+  margin-bottom: 0.8rem;
+}
+
+.section-title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  margin-bottom: 0.8rem;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+.section-sub {
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 520px;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+
+.subject-card {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+.subject-card:hover {
+  border-color: var(--blue);
+  box-shadow: var(--shadow);
+  transform: translateY(-3px);
+}
+
+.subject-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+.subject-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.55; }
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  position: relative;
+}
+
+.step-card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.step-circle {
+  width: 52px;
+  height: 52px;
+  background: var(--blue);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0 auto 1rem;
+}
+
+.step-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.step-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
+
+.danny-section {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  box-shadow: var(--shadow-lg);
+  max-width: 860px;
+}
+
+.danny-left {
+  background: linear-gradient(160deg, var(--blue-light), #ede9fe);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.danny-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  border: 3px solid white;
+}
+
+.danny-left h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.2rem; }
+
+.danny-role {
+  font-size: 0.8rem;
+  color: var(--blue);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.danny-stars { color: #f59e0b; font-size: 1rem; letter-spacing: 2px; }
+
+.danny-right {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.danny-quote {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  border-left: 3px solid var(--blue);
+  padding-left: 1.2rem;
+}
+
+.danny-skills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+
+.skill-tag {
+  padding: 0.35rem 0.9rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1.5px solid;
+}
+
+.skill-blue { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+.skill-green { border-color: var(--green); color: var(--green); background: var(--green-light); }
+
+.danny-nums { display: flex; gap: 2rem; }
+.danny-num { text-align: center; }
+.danny-num-val { font-size: 1.8rem; font-weight: 800; color: var(--blue); line-height: 1; }
+.danny-num-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+
+.review-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.review-stars { color: #f59e0b; font-size: 0.9rem; margin-bottom: 0.8rem; }
+.review-text { font-size: 0.9rem; color: var(--muted); line-height: 1.65; font-style: italic; margin-bottom: 1.2rem; }
+
+.review-author { display: flex; align-items: center; gap: 0.8rem; }
+
+.review-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--blue-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.review-name { font-weight: 700; font-size: 0.875rem; }
+.review-info { font-size: 0.775rem; color: var(--muted); }
+
+.price-card {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.price-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+.price-card.featured {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(26,115,232,0.12);
+}
+
+.price-name { font-size: 0.85rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+.price-amount { font-size: 2.8rem; font-weight: 800; color: var(--text); line-height: 1; }
+.price-period { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+
+.price-features { list-style: none; margin-bottom: 1.8rem; }
+.price-features li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.875rem;
+  color: var(--text);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.price-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+.price-features li:last-child { border-bottom: none; }
+
+.btn-plan {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Inter', sans-serif;
+  border: 1.5px solid var(--blue);
+  background: white;
+  color: var(--blue);
+}
+.price-card.featured .btn-plan {
+  background: var(--blue);
+  color: white;
+}
+.btn-plan:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,115,232,0.25); }
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: white;
+  border-radius: 16px;
+  padding: 2.5rem;
+  max-width: 460px;
+  width: 90%;
+  position: relative;
+  box-shadow: var(--shadow-lg);
+  animation: popIn 0.25s ease;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.modal h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.3rem; }
+.modal > p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+.form-group { margin-bottom: 0.8rem; }
+.form-group label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 0.3rem; }
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: var(--text);
+  background: white;
+}
+.form-group input:focus, .form-group select:focus { outline: none; border-color: var(--blue); }
+
+.btn-submit {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 0.4rem;
+}
+.btn-submit:hover { background: var(--blue-dark); }
+
+footer {
+  background: var(--text);
+  color: rgba(255,255,255,0.7);
+  padding: 3rem 5% 1.5rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 2rem;
+}
+
+.footer-col h4 { color: white; font-size: 0.9rem; font-weight: 700; margin-bottom: 1rem; }
+.footer-col a { display: block; font-size: 0.85rem; margin-bottom: 0.5rem; transition: color 0.15s; }
+.footer-col a:hover { color: white; }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; }
+  .stats-bar { gap: 2rem; }
+  .danny-section { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .logos-nav-links { display: none; }
+}
 </style>
 </head>
 <body>
-<nav style="background: white; padding: 1rem 5%; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between;">
-  <div style="font-size: 1.7rem; font-weight: 900; color: var(--blue);">LOGOS</div>
-  <div style="font-size: 0.9rem; color: var(--muted);">Online Huiswerkbegeleiding</div>
+
+<div id="topbar-home" class="topbar">
+  🎓 Eerste proefles gratis en volledig vrijblijvend — <a href="#proefles" onclick="openModal()">Meld je nu aan</a>
+</div>
+
+<nav class="logos-nav">
+  <div class="logos-nav-inner">
+    <div class="logos-brand" onclick="showPage('home')">LOGOS</div>
+    <ul class="logos-nav-links">
+      <li><a class="active" onclick="showPage('home')" id="nav-home">Home</a></li>
+      <li><a onclick="showPage('theologie')" id="nav-theologie">Theologie</a></li>
+      <li><a onclick="showPage('geschiedenis')" id="nav-geschiedenis">Geschiedenis</a></li>
+      <li><a onclick="showPage('wiskunde')" id="nav-wiskunde">Wiskunde</a></li>
+      <li><a onclick="showPage('natuurkunde')" id="nav-natuurkunde">Natuurkunde</a></li>
+      <li><a onclick="showPage('scheikunde')" id="nav-scheikunde">Scheikunde</a></li>
+      <li><a onclick="showPage('economie')" id="nav-economie">Economie</a></li>
+      <li><a onclick="showPage('biologie')" id="nav-biologie">Biologie</a></li>
+    </ul>
+  </div>
 </nav>
 
-<div class="hero">
-  <h1>Structuur, motivatie en <span style="color: var(--blue);">betere cijfers</span></h1>
-  <p>Online bijles in bèta- én alfavakken voor middelbare scholieren</p>
-  <button class="btn" onclick="alert('Neem contact op: xtheologian@gmail.com')">Gratis proefles →</button>
+<div id="page-home" class="page active" style="padding-top:64px;">
+
+<div style="background: linear-gradient(180deg, #f0f7ff 0%, #fff 100%);">
+  <div class="hero">
+    <div>
+      <div class="hero-badge">✅ 98% van de leerlingen verbetert hun cijfer</div>
+      <h1>Structuur, motivatie en <span class="blue">betere cijfers</span> in bètavakken</h1>
+      <p>Online huiswerkbegeleiding en bijles in zowel bèta- als alfavakken voor middelbare scholieren — volledig online en flexibel in te plannen, met persoonlijke begeleiding door ingenieurs, studenten en theologen uit het hoger onderwijs.</p>
+      <div class="hero-cta">
+        <button class="btn-hero" onclick="openModal()">Probeer één les gratis →</button>
+        <button class="btn-ghost" onclick="alert('Bekijk de methode section')">Bekijk de methode</button>
+      </div>
+      <div class="hero-trust">
+        <span class="stars-inline">★★★★★</span>
+        <span><strong>4.9</strong> gebaseerd op 80+ reviews · Vanaf <strong>€19/maand</strong></span>
+      </div>
+    </div>
+    <div class="hero-image">🔭</div>
+  </div>
 </div>
 
-<div class="stats">
-  <div class="stat"><div class="stat-num">2.400+</div><div>leerlingen geholpen</div></div>
-  <div class="stat"><div class="stat-num">98%</div><div>cijfer verbeterd</div></div>
-  <div class="stat"><div class="stat-num">4.9 ★</div><div>beoordeling</div></div>
-  <div class="stat"><div class="stat-num">€19</div><div>per maand</div></div>
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">2.400+</div><div class="stat-label">leerlingen geholpen</div></div>
+  <div class="stat"><div class="stat-num">98%</div><div class="stat-label">cijfer verbeterd</div></div>
+  <div class="stat"><div class="stat-num">4.9 ★</div><div class="stat-label">gemiddelde beoordeling</div></div>
+  <div class="stat"><div class="stat-num">€19</div><div class="stat-label">vanaf per maand</div></div>
 </div>
 
-<div style="padding: 5rem 5%; max-width: 1200px; margin: 0 auto;">
-  <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">Onze vakken</h2>
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
-    <div style="padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px;">
-      <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Wiskunde</h3>
-      <p style="color: var(--muted); font-size: 0.9rem;">Algebra, Calculus, Statistiek</p>
+<div class="section" id="methode">
+  <div class="section-tag">De methode</div>
+  <h2 class="section-title">Hoe werkt Logos?</h2>
+  <p class="section-sub">In vier stappen van huiswerk-stress naar zelfvertrouwen en betere cijfers.</p>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-circle">1</div>
+      <h3>Account aanmaken</h3>
+      <p>Registreer gratis in 2 minuten. Geef aan welk vak je nodig hebt en in welk leerjaar je zit.</p>
     </div>
-    <div style="padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px;">
-      <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Natuurkunde</h3>
-      <p style="color: var(--muted); font-size: 0.9rem;">Mechanica, Elektriciteit, Optica</p>
+    <div class="step-card">
+      <div class="step-circle">2</div>
+      <h3>Koppeling met tutor</h3>
+      <p>Je wordt gematcht met de student-tutor die het beste aansluit bij jouw vak, niveau en leerdoelen.</p>
     </div>
-    <div style="padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px;">
-      <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Scheikunde</h3>
-      <p style="color: var(--muted); font-size: 0.9rem;">Organisch, Reacties, Berekeningen</p>
+    <div class="step-card">
+      <div class="step-circle">3</div>
+      <h3>Les via videochat</h3>
+      <p>Plan een sessie wanneer het jou uitkomt — met interactief whiteboard en scherm delen.</p>
     </div>
-    <div style="padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px;">
-      <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Biologie</h3>
-      <p style="color: var(--muted); font-size: 0.9rem;">Genetica, Fysiologie, Ecologie</p>
-    </div>
-    <div style="padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px;">
-      <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Theologie</h3>
-      <p style="color: var(--muted); font-size: 0.9rem;">Bijbelstudie, Kerkgeschiedenis</p>
-    </div>
-    <div style="padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px;">
-      <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Geschiedenis</h3>
-      <p style="color: var(--muted); font-size: 0.9rem;">Wereldgeschiedenis, Beschavingen</p>
+    <div class="step-card">
+      <div class="step-circle">4</div>
+      <h3>Groeien & verbeteren</h3>
+      <p>Na elke sessie krijg je samenvatting en oefenopgaven mee. Volg je voortgang in het portaal.</p>
     </div>
   </div>
 </div>
 
+<div class="section-gray" id="tutor">
+  <div class="section" style="padding-top:3rem;padding-bottom:3rem;">
+    <div class="section-tag">Onze tutor</div>
+    <h2 class="section-title">Leer van de besten</h2>
+    <p class="section-sub">Grondig gescreend, academisch geschoold en persoonlijk betrokken.</p>
+
+    <div class="danny-section">
+      <div class="danny-left">
+        <div class="danny-avatar">🧑‍🎓</div>
+        <h3>Ing. Aaron</h3>
+        <div class="danny-role">Ingenieur & Tutor</div>
+        <div class="danny-stars">★★★★★</div>
+      </div>
+      <div class="danny-right">
+        <p class="danny-quote">"Kennis is meer dan feiten — het is begrijpen hoe alles samenhangt. Ik help leerlingen niet alleen door de stof heen, maar ook verder dan de stof."</p>
+        <div class="danny-skills">
+          <span class="skill-tag skill-blue">⚗️ Scheikunde</span>
+          <span class="skill-tag skill-blue">⚡ Natuurkunde</span>
+          <span class="skill-tag skill-blue">📖 Theologie</span>
+        </div>
+        <div class="danny-nums">
+          <div class="danny-num"><div class="danny-num-val">100+</div><div class="danny-num-label">sessies gegeven</div></div>
+          <div class="danny-num"><div class="danny-num-val">5.0</div><div class="danny-num-label">gemiddeld cijfer</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="background: var(--blue); padding: 5rem 5%;">
+  <div style="max-width:900px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center;">
+    <div>
+      <h2 style="font-size:2rem; font-weight:800; color:white; margin-bottom:0.8rem; line-height:1.2;">Nu de eerste les gratis proberen</h2>
+      <p style="color:rgba(255,255,255,0.8); font-size:1rem; line-height:1.6;">Vrijblijvende proefles — geen creditcard nodig. Daarna zelf beslissen of je doorgaat.</p>
+    </div>
+    <div style="background:white; border-radius:16px; padding:2rem; box-shadow:0 8px 40px rgba(0,0,0,0.15);">
+      <h3 style="font-size:1.05rem; font-weight:800; margin-bottom:0.3rem;">Gratis proefles aanvragen</h3>
+      <p style="font-size:0.8rem; color:#6b7280; margin-bottom:1.2rem;">Stuur ons een e-mail met je naam, vak en niveau — we nemen binnen 24 uur contact op.</p>
+      <div class="form-group"><label>Jouw naam</label><input type="text" id="ctaNaam" placeholder="Naam leerling"></div>
+      <div class="form-group"><label>Jouw e-mailadres</label><input type="email" id="ctaEmail" placeholder="jouw@email.nl"></div>
+      <button class="btn-submit" onclick="stuurCtaEmail()">Proefles aanvragen →</button>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="ervaringen">
+  <div class="section-tag">Ervaringen</div>
+  <h2 class="section-title">Trots op de feedback!</h2>
+  <p class="section-sub">Wat leerlingen en ouders zeggen over de begeleiding van Ingenieur Aaron.</p>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Ingenieur Aaron legt scheikunde zo helder uit dat het eindelijk klikt. Hij combineert technische kennis met echte rust en geduld — daar word je als leerling echt beter van."</p>
+      <div class="review-author">
+        <div class="review-avatar">👧</div>
+        <div><div class="review-name">Anne B.</div><div class="review-info">Scheikunde & Natuurkunde</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Wat Aaron uniek maakt is dat hij zowel bètavakken als alfavakken beheerst. Hij ziet verbanden die andere tutors missen."</p>
+      <div class="review-author">
+        <div class="review-avatar">🧑</div>
+        <div><div class="review-name">Jayden V.</div><div class="review-info">Bèta & Alfa vakken</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Met zijn achtergrond in theologie en techniek brengt Ingenieur Aaron een perspectief dat verder gaat dan de stof."</p>
+      <div class="review-author">
+        <div class="review-avatar">👦</div>
+        <div><div class="review-name">Lucas M.</div><div class="review-info">Theologie & Wetenschap</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-gray" id="prijzen">
+  <div class="section" style="padding-top:3rem;padding-bottom:3rem;">
+    <div class="section-tag">Tarieven</div>
+    <h2 class="section-title">Stel zelf je tarief samen</h2>
+    <p class="section-sub">Geen verborgen kosten. Eerste proefles altijd gratis en vrijblijvend.</p>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; max-width: 860px;">
+      <div class="price-card">
+        <div class="price-name">Starter</div>
+        <div class="price-amount"><sup>€</sup>19</div>
+        <div class="price-period">per maand</div>
+        <ul class="price-features">
+          <li>2 sessies per maand (45 min)</li>
+          <li>1 bètavak naar keuze</li>
+          <li>Notities & oefenopgaven</li>
+        </ul>
+        <button class="btn-plan" onclick="alert('Starter plan gekozen')">Kies Starter</button>
+      </div>
+      <div class="price-card featured">
+        <div class="price-name">Pro</div>
+        <div class="price-amount"><sup>€</sup>45</div>
+        <div class="price-period">per maand</div>
+        <ul class="price-features">
+          <li>6 sessies per maand (60 min)</li>
+          <li>Alle bèta- én alfavakken</li>
+          <li>Chat-support tussendoor</li>
+          <li>Prioriteit bij roostering</li>
+        </ul>
+        <button class="btn-plan" onclick="alert('Pro plan gekozen')">Kies Pro</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Intensief</div>
+        <div class="price-amount"><sup>€</sup>89</div>
+        <div class="price-period">per maand</div>
+        <ul class="price-features">
+          <li>Onbeperkte sessies</li>
+          <li>Vaste persoonlijke tutor</li>
+          <li>Alle vakken</li>
+          <li>24/7 chat-support</li>
+        </ul>
+        <button class="btn-plan" onclick="alert('Intensief plan gekozen')">Kies Intensief</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>Proefles aanvragen</h2>
+    <p>Vul je gegevens in — je e-mailprogramma opent met alles ingevuld.</p>
+    <div class="form-group"><label>Voornaam leerling</label><input id="mVoornaam" type="text" placeholder="Voornaam"></div>
+    <div class="form-group"><label>Achternaam</label><input id="mAchternaam" type="text" placeholder="Achternaam"></div>
+    <div class="form-group"><label>E-mailadres</label><input id="mEmail" type="email" placeholder="jouw@email.nl"></div>
+    <button class="btn-submit" onclick="verstuurModal()">Aanmelden →</button>
+  </div>
+</div>
+
 <footer>
-  <h3 style="color: white; margin-bottom: 1rem;">Contact</h3>
-  <p style="margin-bottom: 1rem;"><a href="mailto:xtheologian@gmail.com" style="color: white; text-decoration: underline;">xtheologian@gmail.com</a></p>
-  <p style="font-size: 0.85rem;">© 2026 Logos. Alle rechten voorbehouden.</p>
+  <div style="padding: 0; max-width:1200px; margin:0 auto; width:100%;">
+    <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:3rem; margin-bottom:2.5rem;">
+      <div>
+        <a href="#" style="font-size:1.4rem; font-weight:800; color:white; letter-spacing:-0.5px; display:block; margin-bottom:0.8rem; text-decoration:none;">Logos</a>
+        <p style="font-size:0.875rem; color:rgba(255,255,255,0.75); line-height:1.7;">Online huiswerkbegeleiding door ingenieurs, studenten en theologen uit het hoger onderwijs.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Informatie</h4>
+        <a href="#vakken">Onze vakken</a>
+        <a href="#methode">De methode</a>
+        <a href="#tutor">Tutor</a>
+        <a href="#prijzen">Tarieven</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:xtheologian@gmail.com">xtheologian@gmail.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Logos. Alle rechten voorbehouden.</span>
+      <span>⭐ 4.9 uit 80+ reviews</span>
+    </div>
+  </div>
 </footer>
 
 <script>
-  // Simple page functionality
-  console.log('Logos website loaded successfully');
+function openModal() { document.getElementById('modal').classList.add('open'); }
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-' + name);
+  if(page) { page.classList.add('active'); }
+  window.scrollTo(0, 0);
+}
+function stuurCtaEmail() {
+  const naam = document.getElementById('ctaNaam').value.trim();
+  const email = document.getElementById('ctaEmail').value.trim();
+  if(!naam || !email) { alert('Vul je naam en e-mailadres in.'); return; }
+  window.location.href = 'mailto:xtheologian@gmail.com?subject=Proefles aanvraag&body=Naam: ' + naam + '%0AE-mail: ' + email;
+}
+function verstuurModal() {
+  const naam = document.getElementById('mVoornaam').value.trim();
+  const achter = document.getElementById('mAchternaam').value.trim();
+  const email = document.getElementById('mEmail').value.trim();
+  if(!naam || !email) { alert('Vul je naam en e-mailadres in.'); return; }
+  window.location.href = 'mailto:xtheologian@gmail.com?subject=Aanmelding Logos&body=Naam: ' + naam + ' ' + achter + '%0AE-mail: ' + email;
+  closeModal();
+}
+document.getElementById('modal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
 </script>
 </body>
 </html>
