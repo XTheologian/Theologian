@@ -734,7 +734,7 @@ footer {
           <li>1 bètavak naar keuze</li>
           <li>Notities & oefenopgaven</li>
         </ul>
-        <button class="btn-plan" onclick="alert('Starter plan gekozen')">Kies Starter</button>
+        <button class="btn-plan" onclick="openModalPlan('Starter — €19/maand')">Kies Starter</button>
       </div>
       <div class="price-card featured">
         <div class="price-name">Pro</div>
@@ -746,7 +746,7 @@ footer {
           <li>Chat-support tussendoor</li>
           <li>Prioriteit bij roostering</li>
         </ul>
-        <button class="btn-plan" onclick="alert('Pro plan gekozen')">Kies Pro</button>
+        <button class="btn-plan" onclick="openModalPlan('Pro — €45/maand')">Kies Pro</button>
       </div>
       <div class="price-card">
         <div class="price-name">Intensief</div>
@@ -758,7 +758,7 @@ footer {
           <li>Alle vakken</li>
           <li>24/7 chat-support</li>
         </ul>
-        <button class="btn-plan" onclick="alert('Intensief plan gekozen')">Kies Intensief</button>
+        <button class="btn-plan" onclick="openModalPlan('Intensief — €89/maand')">Kies Intensief</button>
       </div>
     </div>
   </div>
@@ -769,12 +769,38 @@ footer {
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">×</button>
-    <h2>Proefles aanvragen</h2>
-    <p>Vul je gegevens in — je e-mailprogramma opent met alles ingevuld.</p>
-    <div class="form-group"><label>Voornaam leerling</label><input id="mVoornaam" type="text" placeholder="Voornaam"></div>
-    <div class="form-group"><label>Achternaam</label><input id="mAchternaam" type="text" placeholder="Achternaam"></div>
+    <h2 id="modal-title">Proefles aanvragen</h2>
+    <p id="modal-subtitle">Vul je gegevens in — je e-mailprogramma opent met alles ingevuld.</p>
+    <div class="form-row">
+      <div class="form-group"><label>Voornaam leerling</label><input id="mVoornaam" type="text" placeholder="Voornaam"></div>
+      <div class="form-group"><label>Achternaam</label><input id="mAchternaam" type="text" placeholder="Achternaam"></div>
+    </div>
     <div class="form-group"><label>E-mailadres</label><input id="mEmail" type="email" placeholder="jouw@email.nl"></div>
-    <button class="btn-submit" onclick="verstuurModal()">Aanmelden →</button>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Vak</label>
+        <select id="mVak">
+          <option>Wiskunde A</option><option>Wiskunde B</option>
+          <option>Natuurkunde</option><option>Scheikunde</option>
+          <option>Biologie</option><option>Economie</option>
+          <option>Geschiedenis</option><option>Talen</option><option>Theologie</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Niveau &amp; leerjaar</label>
+        <select id="mNiveau">
+          <option>VMBO-T 3</option><option>VMBO-T 4</option>
+          <option>HAVO 3</option><option>HAVO 4</option><option>HAVO 5</option>
+          <option>VWO 3</option><option>VWO 4</option><option>VWO 5</option><option>VWO 6</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" id="abonnement-row" style="display:none;">
+      <label>Gekozen abonnement</label>
+      <input id="mAbonnement" type="text" readonly style="background:#f9fafb;color:#6b7280;">
+    </div>
+    <button class="btn-submit" onclick="verstuurModal()">Aanmelden → opent je e-mail</button>
+    <p style="font-size:0.75rem;color:#9ca3af;margin-top:0.8rem;text-align:center;">Je e-mailprogramma opent met alles ingevuld. Verstuur dan zelf.</p>
   </div>
 </div>
 
@@ -805,7 +831,19 @@ footer {
 </footer>
 
 <script>
-function openModal() { document.getElementById('modal').classList.add('open'); }
+function openModal() {
+  document.getElementById('abonnement-row').style.display = 'none';
+  document.getElementById('modal-title').textContent = 'Proefles aanvragen';
+  document.getElementById('modal-subtitle').textContent = 'Vul je gegevens in — je e-mailprogramma opent met alles ingevuld.';
+  document.getElementById('modal').classList.add('open');
+}
+function openModalPlan(plan) {
+  document.getElementById('mAbonnement').value = plan;
+  document.getElementById('abonnement-row').style.display = 'block';
+  document.getElementById('modal-title').textContent = plan.split(' —')[0] + ' abonnement';
+  document.getElementById('modal-subtitle').textContent = 'Gekozen: ' + plan + ' · Vul je gegevens in om aan te melden.';
+  document.getElementById('modal').classList.add('open');
+}
 function closeModal() { document.getElementById('modal').classList.remove('open'); }
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -820,11 +858,24 @@ function stuurCtaEmail() {
   window.location.href = 'mailto:xtheologian@gmail.com?subject=Proefles aanvraag&body=Naam: ' + naam + '%0AE-mail: ' + email;
 }
 function verstuurModal() {
-  const naam = document.getElementById('mVoornaam').value.trim();
-  const achter = document.getElementById('mAchternaam').value.trim();
-  const email = document.getElementById('mEmail').value.trim();
-  if(!naam || !email) { alert('Vul je naam en e-mailadres in.'); return; }
-  window.location.href = 'mailto:xtheologian@gmail.com?subject=Aanmelding Logos&body=Naam: ' + naam + ' ' + achter + '%0AE-mail: ' + email;
+  const naam       = document.getElementById('mVoornaam').value.trim();
+  const achter     = document.getElementById('mAchternaam').value.trim();
+  const email      = document.getElementById('mEmail').value.trim();
+  const vak        = document.getElementById('mVak').value;
+  const niveau     = document.getElementById('mNiveau').value;
+  const abonnement = document.getElementById('mAbonnement').value;
+  if (!naam || !email) { alert('Vul je naam en e-mailadres in.'); return; }
+  const onderwerp = encodeURIComponent('Aanmelding Logos – ' + (abonnement || 'Proefles'));
+  const bericht = encodeURIComponent(
+    'Hallo Ingenieur Aaron,\n\n' +
+    'Naam: ' + naam + ' ' + achter + '\n' +
+    'E-mail: ' + email + '\n' +
+    'Vak: ' + vak + '\n' +
+    'Niveau: ' + niveau + '\n' +
+    (abonnement ? 'Abonnement: ' + abonnement + '\n' : '') +
+    '\nMet vriendelijke groet,\n' + naam
+  );
+  window.location.href = 'mailto:xtheologian@gmail.com?subject=' + onderwerp + '&body=' + bericht;
   closeModal();
 }
 document.getElementById('modal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
