@@ -103,8 +103,25 @@ a { text-decoration: none; color: inherit; }
 
 .page { display: none; }
 .page.active { display: block; }
-
-.hero {
+.subpage-hero {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  display: block;
+}
+.subpage-text {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3.5rem 5%;
+}
+.subpage-text h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+}
+.subpage-text p {
+  color: var(--muted);
+  margin-bottom: 1rem;
+}.hero {
   background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 60%);
   padding: 5rem 5% 4rem;
   display: grid;
@@ -765,8 +782,63 @@ footer {
 </div>
 
 </div>
+<div id="page-theologie" class="page" style="padding-top:64px;">
+  <img class="subpage-hero" src="JOUW-AFBEELDING-URL" alt="Theologie">
+  <div class="subpage-text">
+    <h1>Theologie</h1>
+    <p>Hier kun je de tekst over het vak Theologie plaatsen.</p>
+  </div>
+</div>
 
-<div class="modal-overlay" id="modal">
+<div id="page-geschiedenis" class="page" style="padding-top:64px;">
+  <img class="subpage-hero" src="JOUW-AFBEELDING-URL" alt="Geschiedenis">
+  <div class="subpage-text">
+    <h1>Geschiedenis</h1>
+    <p>Hier kun je de tekst over het vak Geschiedenis plaatsen.</p>
+  </div>
+</div>
+
+<div id="page-wiskunde" class="page" style="padding-top:64px;">
+  <img class="subpage-hero" src="JOUW-AFBEELDING-URL" alt="Wiskunde">
+  <div class="subpage-text">
+    <h1>Wiskunde</h1>
+    <p>Hier kun je de tekst over het vak Wiskunde plaatsen.</p>
+  </div>
+</div>
+
+<div id="page-natuurkunde" class="page" style="padding-top:64px;">
+  <img class="subpage-hero" src="JOUW-AFBEELDING-URL" alt="Natuurkunde">
+  <div class="subpage-text">
+    <h1>Natuurkunde</h1>
+    <p>Hier kun je de tekst over het vak Natuurkunde plaatsen.</p>
+  </div>
+</div>
+
+<div id="page-scheikunde" class="page" style="padding-top:64px;">
+  <img class="subpage-hero" src="JOUW-AFBEELDING-URL" alt="Scheikunde">
+  <div class="subpage-text">
+    <h1>Scheikunde</h1>
+    <p>Hier kun je de tekst over het vak Scheikunde plaatsen.</p>
+  </div>
+</div>
+
+<div id="page-economie" class="page" style="padding-top:64px;">
+  <img class="subpage-hero" src="JOUW-AFBEELDING-URL" alt="Economie">
+  <div class="subpage-text">
+    <h1>Economie</h1>
+    <p>Hier kun je de tekst over het vak Economie plaatsen.</p>
+  </div>
+</div>
+
+<div id="page-biologie" class="page" style="padding-top:64px;">
+  <img class="subpage-hero" src="JOUW-AFBEELDING-URL" alt="Biologie">
+  <div class="subpage-text">
+    <h1>Biologie</h1>
+    <p>Hier kun je de tekst over het vak Biologie plaatsen.</p>
+  </div>
+</div>
+  
+  <div class="modal-overlay" id="modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">×</button>
     <h2 id="modal-title">Proefles aanvragen</h2>
