@@ -576,8 +576,135 @@ a { text-decoration: none; color: inherit; }
   background: white;
 }
 .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--blue); }
+/* ===== Aanmeldwizard ===== */
+.wizard-section {
+  background: var(--light);
+  padding: 5rem 5%;
+}
+.wizard-box {
+  max-width: 780px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+.wizard-header {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+  color: white;
+  padding: 2rem 2.2rem 1.5rem;
+}
+.wizard-header h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.4rem; }
+.wizard-header p { font-size: 0.9rem; opacity: 0.92; margin-bottom: 1.2rem; }
+.wizard-badges { display: flex; flex-wrap: wrap; gap: 1.2rem; font-size: 0.8rem; }
+.wizard-badges span { display: flex; align-items: center; gap: 0.4rem; opacity: 0.95; }
 
-.btn-submit {
+.wizard-progress {
+  display: flex;
+  gap: 0.4rem;
+  padding: 1.2rem 2.2rem 0;
+}
+.wizard-progress-bar {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--border);
+  overflow: hidden;
+}
+.wizard-progress-bar span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--blue);
+  border-radius: 3px;
+  transition: width 0.35s ease;
+}
+.wizard-progress-bar.done span { width: 100%; background: var(--green); }
+.wizard-progress-bar.active span { width: 100%; }
+
+.wizard-body { padding: 2rem 2.2rem 2.2rem; }
+.wizard-step { display: none; }
+.wizard-step.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+.wizard-step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.wizard-step .wizard-sub { font-size: 0.875rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.5rem; }
+
+.onvoldoendes-row { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+.onv-btn {
+  flex: 1;
+  min-width: 70px;
+  padding: 1rem 0.5rem;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+.onv-btn:hover { border-color: var(--blue); }
+.onv-btn.selected { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+
+.wizard-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 600px) { .wizard-row { grid-template-columns: 1fr; } }
+
+.advies-box {
+  background: var(--blue-light);
+  border: 1.5px solid var(--blue);
+  border-radius: 12px;
+  padding: 1.3rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.advies-box .advies-tag { font-size: 0.72rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.3rem; }
+.advies-box p { font-size: 0.88rem; color: var(--text); line-height: 1.5; }
+.advies-box b { color: var(--blue-dark); }
+
+.plan-card {
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.7rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.15s ease;
+}
+.plan-card:hover { border-color: var(--blue); }
+.plan-card.selected { border-color: var(--blue); background: var(--blue-light); }
+.plan-card.recommended { border-color: var(--green); }
+.plan-card .plan-left { display: flex; align-items: center; gap: 0.7rem; }
+.plan-card .plan-radio {
+  width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.plan-card.selected .plan-radio { border-color: var(--blue); }
+.plan-card.selected .plan-radio::after { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--blue); }
+.plan-card .plan-name { font-weight: 700; font-size: 0.92rem; }
+.plan-card .plan-tag { font-size: 0.68rem; font-weight: 700; color: var(--green); background: var(--green-light); padding: 0.15rem 0.5rem; border-radius: 20px; margin-left: 0.5rem; }
+.plan-card .plan-right { text-align: right; }
+.plan-card .plan-price { font-weight: 800; color: var(--blue-dark); font-size: 0.95rem; }
+.plan-card .plan-perhour { font-size: 0.72rem; color: var(--muted); }
+
+.wizard-nav { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
+.wizard-nav button {
+  padding: 0.75rem 1.6rem;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+}
+.wizard-btn-prev { background: white; color: var(--text); border: 1.5px solid var(--border) !important; }
+.wizard-btn-prev:hover { background: var(--light); }
+.wizard-btn-next { background: var(--blue); color: white; margin-left: auto; }
+.wizard-btn-next:hover { background: var(--blue-dark); }
+.wizard-btn-next:disabled { background: var(--border); cursor: not-allowed; }.btn-submit {
   width: 100%;
   padding: 0.75rem;
   background: var(--blue);
@@ -679,8 +806,126 @@ footer {
   <div class="stat"><div class="stat-num">4.9 ★</div><div class="stat-label">gemiddelde beoordeling</div></div>
   <div class="stat"><div class="stat-num">€19</div><div class="stat-label">vanaf per maand</div></div>
 </div>
+<div class="wizard-section" id="inschrijven">
+  <div class="wizard-box">
+    <div class="wizard-header">
+      <h2>Schrijf je alvast in</h2>
+      <p>Meld je aan voor het schooljaar 2026-2027</p>
+      <div class="wizard-badges">
+        <span>✅ Gratis proefles</span>
+        <span>✅ Flexibel te plannen</span>
+        <span>✅ Bepaal zelf of je doorgaat</span>
+      </div>
+    </div>
 
-<div class="section" id="methode">
+    <div class="wizard-progress">
+      <div class="wizard-progress-bar" id="wp1"><span></span></div>
+      <div class="wizard-progress-bar" id="wp2"><span></span></div>
+      <div class="wizard-progress-bar" id="wp3"><span></span></div>
+      <div class="wizard-progress-bar" id="wp4"><span></span></div>
+    </div>
+
+    <div class="wizard-body">
+
+      <div class="wizard-step active" id="wizStep1">
+        <h3>Hoeveel onvoldoendes heb je?</h3>
+        <p class="wizard-sub">Nog geen actuele cijfers? Vul dan het aantal onvoldoendes van vorig schooljaar in.</p>
+        <div class="onvoldoendes-row" id="onvRow">
+          <button type="button" class="onv-btn" data-val="0">0</button>
+          <button type="button" class="onv-btn" data-val="1">1</button>
+          <button type="button" class="onv-btn" data-val="2">2</button>
+          <button type="button" class="onv-btn" data-val="3">3</button>
+          <button type="button" class="onv-btn" data-val="4">4+</button>
+        </div>
+        <div class="wizard-nav">
+          <button type="button" class="wizard-btn-next" id="wNext1" disabled onclick="wizardNext(1)">Volgende →</button>
+        </div>
+      </div>
+
+      <div class="wizard-step" id="wizStep2">
+        <h3>Onderwijsrichting &amp; leerjaar</h3>
+        <p class="wizard-sub">Zo kunnen we een passend advies geven.</p>
+        <div class="wizard-row">
+          <div class="form-group">
+            <label>Onderwijsrichting</label>
+            <select id="wizRichting">
+              <option value="">Kies een richting</option>
+              <option value="Groep 7 of 8">Groep 7 of 8</option>
+              <option value="Vmbo">Vmbo</option>
+              <option value="Vmbo/Havo">Vmbo/Havo</option>
+              <option value="Havo">Havo</option>
+              <option value="Havo/Vwo">Havo/Vwo</option>
+              <option value="Vwo">Vwo</option>
+              <option value="Mbo of Hbo">Mbo of Hbo</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Leerjaar</label>
+            <select id="wizLeerjaar">
+              <option value="">Kies een leerjaar</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+        </div>
+        <div class="wizard-nav">
+          <button type="button" class="wizard-btn-prev" onclick="wizardPrev(2)">← Vorige</button>
+          <button type="button" class="wizard-btn-next" id="wNext2" disabled onclick="wizardNext(2)">Volgende →</button>
+        </div>
+      </div>
+
+      <div class="wizard-step" id="wizStep3">
+        <h3>Ons advies</h3>
+        <p class="wizard-sub" id="wizAdviesIntro">Op basis van jouw gegevens adviseren wij het volgende:</p>
+        <div class="advies-box">
+          <div class="advies-tag">Aanbevolen</div>
+          <p id="wizAdviesText">Vul eerst de vorige stappen in.</p>
+        </div>
+        <div id="wizPlans"></div>
+        <div class="wizard-nav">
+          <button type="button" class="wizard-btn-prev" onclick="wizardPrev(3)">← Vorige</button>
+          <button type="button" class="wizard-btn-next" id="wNext3" disabled onclick="wizardNext(3)">Volgende →</button>
+        </div>
+      </div>
+
+      <div class="wizard-step" id="wizStep4">
+        <h3>Gegevens leerling</h3>
+        <p class="wizard-sub">Vul hier de gegevens in van de leerling.</p>
+        <div class="wizard-row">
+          <div class="form-group"><label>Voornaam</label><input type="text" id="wizLVoornaam"></div>
+          <div class="form-group"><label>Achternaam</label><input type="text" id="wizLAchternaam"></div>
+        </div>
+
+        <h3 style="margin-top:1.5rem;">Gegevens ouder/verzorger</h3>
+        <p class="wizard-sub">Vul hier de gegevens in van het contactpersoon.</p>
+        <div class="wizard-row">
+          <div class="form-group"><label>Voornaam</label><input type="text" id="wizOVoornaam"></div>
+          <div class="form-group"><label>Achternaam</label><input type="text" id="wizOAchternaam"></div>
+        </div>
+        <div class="wizard-row">
+          <div class="form-group"><label>Emailadres</label><input type="email" id="wizEmail"></div>
+          <div class="form-group"><label>Telefoonnummer</label><input type="tel" id="wizTelefoon"></div>
+        </div>
+        <div class="form-group">
+          <label>Kortingscode (optioneel)</label>
+          <input type="text" id="wizKorting" placeholder="Vul hier je kortingscode in">
+        </div>
+
+        <div class="wizard-nav">
+          <button type="button" class="wizard-btn-prev" onclick="wizardPrev(4)">← Vorige</button>
+          <button type="button" class="wizard-btn-next" onclick="wizardSubmit()">Aanmelden →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+  
+  <div class="section" id="methode">
   <div class="section-tag">De methode</div>
   <h2 class="section-title">Hoe werkt Logos?</h2>
   <p class="section-sub">In vier stappen van huiswerk-stress naar zelfvertrouwen en betere cijfers.</p>
@@ -1276,6 +1521,132 @@ function nextTutor() {
 
 initTutorDots();
 setInterval(nextTutor, 5000);
+
+const wizData = { onvoldoendes: null, richting: '', leerjaar: '', plan: null };
+
+const wizPlanOpties = [
+  { uren: 2,  prijs: 25, perUur: 12.50 },
+  { uren: 4,  prijs: 39, perUur: 9.75 },
+  { uren: 6,  prijs: 55, perUur: 9.17 },
+  { uren: 8,  prijs: 70, perUur: 8.75 },
+  { uren: 10, prijs: 79, perUur: 7.90 }
+];
+
+document.querySelectorAll('.onv-btn').forEach(btn => {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.onv-btn').forEach(b => b.classList.remove('selected'));
+    this.classList.add('selected');
+    wizData.onvoldoendes = this.dataset.val;
+    document.getElementById('wNext1').disabled = false;
+  });
+});
+
+document.getElementById('wizRichting').addEventListener('change', wizCheckStep2);
+document.getElementById('wizLeerjaar').addEventListener('change', wizCheckStep2);
+function wizCheckStep2() {
+  wizData.richting = document.getElementById('wizRichting').value;
+  wizData.leerjaar = document.getElementById('wizLeerjaar').value;
+  document.getElementById('wNext2').disabled = !(wizData.richting && wizData.leerjaar);
+}
+
+function wizAanbevolenUren() {
+  const map = { '0': 2, '1': 4, '2': 6, '3': 8, '4': 10 };
+  return map[wizData.onvoldoendes] || 4;
+}
+
+function wizRenderStap3() {
+  const aanbevolenUren = wizAanbevolenUren();
+  const aanbevolen = wizPlanOpties.find(p => p.uren === aanbevolenUren);
+
+  document.getElementById('wizAdviesText').innerHTML =
+    `Op basis van onze ervaring met 3000+ leerlingen adviseren wij voor <b>${wizData.richting}, leerjaar ${wizData.leerjaar}</b> en <b>${wizData.onvoldoendes === '4' ? '4+' : wizData.onvoldoendes} onvoldoende(n)</b> het volgende: <b>${aanbevolen.uren} uur begeleiding per week</b>.`;
+
+  const plansEl = document.getElementById('wizPlans');
+  plansEl.innerHTML = '';
+  wizPlanOpties.forEach(p => {
+    const isAanbevolen = p.uren === aanbevolenUren;
+    const card = document.createElement('div');
+    card.className = 'plan-card' + (isAanbevolen ? ' recommended' : '');
+    card.dataset.uren = p.uren;
+    card.innerHTML = `
+      <div class="plan-left">
+        <div class="plan-radio"></div>
+        <div>
+          <span class="plan-name">${p.uren} uur begeleiding per week</span>
+          ${isAanbevolen ? '<span class="plan-tag">Aanbevolen</span>' : ''}
+        </div>
+      </div>
+      <div class="plan-right">
+        <div class="plan-price">€${p.prijs} per week</div>
+        <div class="plan-perhour">€${p.perUur.toFixed(2).replace('.', ',')} / per uur</div>
+      </div>`;
+    card.addEventListener('click', () => wizSelectPlan(p.uren));
+    plansEl.appendChild(card);
+  });
+
+  wizSelectPlan(aanbevolenUren);
+}
+
+function wizSelectPlan(uren) {
+  wizData.plan = wizPlanOpties.find(p => p.uren === uren);
+  document.querySelectorAll('.plan-card').forEach(c => {
+    c.classList.toggle('selected', parseInt(c.dataset.uren) === uren);
+  });
+  document.getElementById('wNext3').disabled = false;
+}
+
+function wizardNext(step) {
+  if (step === 2) wizRenderStap3();
+  document.getElementById('wizStep' + step).classList.remove('active');
+  document.getElementById('wizStep' + (step + 1)).classList.add('active');
+  wizUpdateProgress(step + 1);
+  document.getElementById('inschrijven').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function wizardPrev(step) {
+  document.getElementById('wizStep' + step).classList.remove('active');
+  document.getElementById('wizStep' + (step - 1)).classList.add('active');
+  wizUpdateProgress(step - 1);
+}
+
+function wizUpdateProgress(activeStep) {
+  for (let i = 1; i <= 4; i++) {
+    const bar = document.getElementById('wp' + i);
+    bar.classList.remove('active', 'done');
+    if (i < activeStep) bar.classList.add('done');
+    else if (i === activeStep) bar.classList.add('active');
+  }
+}
+
+function wizardSubmit() {
+  const lVoor = document.getElementById('wizLVoornaam').value.trim();
+  const lAch = document.getElementById('wizLAchternaam').value.trim();
+  const oVoor = document.getElementById('wizOVoornaam').value.trim();
+  const oAch = document.getElementById('wizOAchternaam').value.trim();
+  const email = document.getElementById('wizEmail').value.trim();
+  const tel = document.getElementById('wizTelefoon').value.trim();
+  const korting = document.getElementById('wizKorting').value.trim();
+
+  if (!lVoor || !lAch || !oVoor || !oAch || !email) {
+    alert('Vul alsjeblieft alle verplichte velden in.');
+    return;
+  }
+
+  const onderwerp = encodeURIComponent('Aanmelding ' + lVoor + ' ' + lAch);
+  const bericht = encodeURIComponent(
+    'Leerling: ' + lVoor + ' ' + lAch + '\n' +
+    'Ouder/verzorger: ' + oVoor + ' ' + oAch + '\n' +
+    'Email: ' + email + '\n' +
+    'Telefoon: ' + tel + '\n\n' +
+    'Onderwijsrichting: ' + wizData.richting + '\n' +
+    'Leerjaar: ' + wizData.leerjaar + '\n' +
+    'Aantal onvoldoendes: ' + wizData.onvoldoendes + '\n' +
+    'Gekozen pakket: ' + wizData.plan.uren + ' uur per week (€' + wizData.plan.prijs + ' per week)\n' +
+    (korting ? 'Kortingscode: ' + korting + '\n' : '')
+  );
+
+  window.location.href = 'mailto:xtheologian@gmail.com?subject=' + onderwerp + '&body=' + bericht;
+}
 </script>
 </body>
 </html>
