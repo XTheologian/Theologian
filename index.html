@@ -425,8 +425,25 @@ a { text-decoration: none; color: inherit; }
 .danny-num { text-align: center; }
 .danny-num-val { font-size: 1.8rem; font-weight: 800; color: var(--blue); line-height: 1; }
 .danny-num-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+.danny-section { transition: opacity 0.3s ease; }
+.danny-section.fading { opacity: 0; }
 
-.review-card {
+.tutor-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+.tutor-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.tutor-dot.active { background: var(--blue); }
+  .review-card {
   background: white;
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -696,26 +713,27 @@ footer {
     <h2 class="section-title">Leer van de besten</h2>
     <p class="section-sub">Grondig gescreend, academisch geschoold en persoonlijk betrokken.</p>
 
-    <div class="danny-section">
+<div class="danny-section" id="tutorCard">
       <div class="danny-left">
-        <div class="danny-avatar">🧑‍🎓</div>
-        <h3>Ing. Aaron</h3>
-        <div class="danny-role">Ingenieur & Tutor</div>
+        <div class="danny-avatar" id="tutorAvatar">🧑‍🎓</div>
+        <h3 id="tutorName">Ing. Aaron</h3>
+        <div class="danny-role" id="tutorRole">Ingenieur & Tutor</div>
         <div class="danny-stars">★★★★★</div>
       </div>
       <div class="danny-right">
-        <p class="danny-quote">"Kennis is meer dan feiten — het is begrijpen hoe alles samenhangt. Ik help leerlingen niet alleen door de stof heen, maar ook verder dan de stof."</p>
-        <div class="danny-skills">
+        <p class="danny-quote" id="tutorQuote">"Kennis is meer dan feiten — het is begrijpen hoe alles samenhangt. Ik help leerlingen niet alleen door de stof heen, maar ook verder dan de stof."</p>
+        <div class="danny-skills" id="tutorSkills">
           <span class="skill-tag skill-blue">⚗️ Scheikunde</span>
           <span class="skill-tag skill-blue">⚡ Natuurkunde</span>
           <span class="skill-tag skill-blue">📖 Theologie</span>
         </div>
         <div class="danny-nums">
-          <div class="danny-num"><div class="danny-num-val">100+</div><div class="danny-num-label">sessies gegeven</div></div>
-          <div class="danny-num"><div class="danny-num-val">5.0</div><div class="danny-num-label">gemiddeld cijfer</div></div>
+          <div class="danny-num"><div class="danny-num-val" id="tutorSessions">100+</div><div class="danny-num-label">sessies gegeven</div></div>
+          <div class="danny-num"><div class="danny-num-val" id="tutorScore">5.0</div><div class="danny-num-label">gemiddeld cijfer</div></div>
         </div>
       </div>
     </div>
+    <div class="tutor-dots" id="tutorDots"></div>
   </div>
 </div>
 
@@ -999,6 +1017,49 @@ function verstuurModal() {
   closeModal();
 }
 document.getElementById('modal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
+const tutors = [
+  { avatar:'🧑‍🎓', name:'Ing. Aaron', role:'Ingenieur & Tutor', quote:'"Kennis is meer dan feiten — het is begrijpen hoe alles samenhangt. Ik help leerlingen niet alleen door de stof heen, maar ook verder dan de stof."', skills:[{cls:'skill-blue',label:'⚗️ Scheikunde'},{cls:'skill-blue',label:'⚡ Natuurkunde'},{cls:'skill-blue',label:'📖 Theologie'}], sessions:'100+', score:'5.0' },
+  { avatar:'🧑‍🔬', name:'Fleur van den Berg', role:'Student Biologie & Tutor', quote:'"Ik laat leerlingen zelf de logica achter een proces ontdekken — dat blijft veel beter hangen dan uit je hoofd leren."', skills:[{cls:'skill-green',label:'🧬 Biologie'},{cls:'skill-blue',label:'⚗️ Scheikunde'},{cls:'skill-blue',label:'📐 Wiskunde'}], sessions:'80+', score:'4.9' },
+  { avatar:'🧑‍🏫', name:'Daan Willems', role:'Wiskundige & Tutor', quote:'"Wiskunde is geen trucje maar een taal. Zodra je die taal spreekt, wordt alles logisch."', skills:[{cls:'skill-blue',label:'📐 Wiskunde'},{cls:'skill-blue',label:'⚡ Natuurkunde'},{cls:'skill-green',label:'📊 Economie'}], sessions:'120+', score:'5.0' },
+  { avatar:'👩‍🎓', name:'Sophie de Wit', role:'Historica & Tutor', quote:'"Geschiedenis gaat over verbanden zien. Als je dat eenmaal doorhebt, onthoud je jaartallen bijna vanzelf."', skills:[{cls:'skill-green',label:'📜 Geschiedenis'},{cls:'skill-blue',label:'📖 Theologie'},{cls:'skill-green',label:'🗣️ Talen'}], sessions:'90+', score:'4.9' },
+  { avatar:'🧑‍💼', name:'Milan Verhoeven', role:'Econoom & Tutor', quote:'"Economie draait om keuzes begrijpen. Ik help leerlingen die keuzes helder in kaart te brengen."', skills:[{cls:'skill-green',label:'📊 Economie'},{cls:'skill-blue',label:'📐 Wiskunde'},{cls:'skill-green',label:'📜 Geschiedenis'}], sessions:'75+', score:'4.8' }
+];
+
+let tutorIndex = 0;
+
+function renderTutor(i) {
+  const t = tutors[i];
+  document.getElementById('tutorAvatar').textContent = t.avatar;
+  document.getElementById('tutorName').textContent = t.name;
+  document.getElementById('tutorRole').textContent = t.role;
+  document.getElementById('tutorQuote').textContent = t.quote;
+  document.getElementById('tutorSessions').textContent = t.sessions;
+  document.getElementById('tutorScore').textContent = t.score;
+  document.getElementById('tutorSkills').innerHTML = t.skills.map(s => `<span class="skill-tag ${s.cls}">${s.label}</span>`).join('');
+  document.querySelectorAll('.tutor-dot').forEach((d, idx) => d.classList.toggle('active', idx === i));
+}
+
+function initTutorDots() {
+  const dotsEl = document.getElementById('tutorDots');
+  dotsEl.innerHTML = tutors.map((_, idx) => `<span class="tutor-dot${idx === 0 ? ' active' : ''}" onclick="goToTutor(${idx})"></span>`).join('');
+}
+
+function goToTutor(i) {
+  const card = document.getElementById('tutorCard');
+  card.classList.add('fading');
+  setTimeout(() => {
+    tutorIndex = i;
+    renderTutor(tutorIndex);
+    card.classList.remove('fading');
+  }, 300);
+}
+
+function nextTutor() {
+  goToTutor((tutorIndex + 1) % tutors.length);
+}
+
+initTutorDots();
+setInterval(nextTutor, 5000);
 </script>
 </body>
 </html>
