@@ -1545,11 +1545,11 @@ setInterval(nextTutor, 5000);
 const wizData = { onvoldoendes: null, richting: '', leerjaar: '', plan: null };
 
 const wizPlanOpties = [
-  { uren: 2,  prijs: 25, perUur: 12.50 },
-  { uren: 4,  prijs: 39, perUur: 9.75 },
-  { uren: 6,  prijs: 55, perUur: 9.17 },
-  { uren: 8,  prijs: 70, perUur: 8.75 },
-  { uren: 10, prijs: 79, perUur: 7.90 }
+  { uren: 2,  prijs: 58,  perUur: 29.00 },
+  { uren: 4,  prijs: 112, perUur: 28.00 },
+  { uren: 6,  prijs: 162, perUur: 27.00 },
+  { uren: 8,  prijs: 208, perUur: 26.00 },
+  { uren: 10, prijs: 250, perUur: 25.00 }
 ];
 
 document.querySelectorAll('.onv-btn').forEach(btn => {
@@ -1579,8 +1579,7 @@ function wizRenderStap3() {
   const aanbevolen = wizPlanOpties.find(p => p.uren === aanbevolenUren);
 
   document.getElementById('wizAdviesText').innerHTML =
-    `Op basis van onze ervaring met 3000+ leerlingen adviseren wij voor <b>${wizData.richting}, leerjaar ${wizData.leerjaar}</b> en <b>${wizData.onvoldoendes === '4' ? '4+' : wizData.onvoldoendes} onvoldoende(n)</b> het volgende: <b>${aanbevolen.uren} uur begeleiding per week</b>.`;
-
+    `Op basis van onze leerlingen en begeleiding adviseren wij voor <b>${wizData.richting}, leerjaar ${wizData.leerjaar}</b> en <b>${wizData.onvoldoendes === '4' ? '4+' : wizData.onvoldoendes} onvoldoende(n)</b> het volgende: <b>${aanbevolen.uren} uur bijles per week/maand</b>.`;
   const plansEl = document.getElementById('wizPlans');
   plansEl.innerHTML = '';
   wizPlanOpties.forEach(p => {
@@ -1592,12 +1591,12 @@ function wizRenderStap3() {
       <div class="plan-left">
         <div class="plan-radio"></div>
         <div>
-          <span class="plan-name">${p.uren} uur begeleiding per week</span>
+          <span class="plan-name">${p.uren} uur bijles per week/maand</span>
           ${isAanbevolen ? '<span class="plan-tag">Aanbevolen</span>' : ''}
         </div>
       </div>
       <div class="plan-right">
-        <div class="plan-price">€${p.prijs} per week</div>
+        <div class="plan-price">€${p.prijs} per week/maand</div>
         <div class="plan-perhour">€${p.perUur.toFixed(2).replace('.', ',')} / per uur</div>
       </div>`;
     card.addEventListener('click', () => wizSelectPlan(p.uren));
