@@ -95,12 +95,42 @@ a { text-decoration: none; color: inherit; }
   cursor: pointer;
 }
 
-.logos-nav-links li a:hover,
-.logos-nav-links li a.active {
+.logos-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
   color: #111;
-  border-bottom-color: #111;
+  padding: 0.3rem 0.5rem;
 }
-
+@media (max-width: 768px) {
+  .logos-nav-toggle { display: block; }
+  .logos-nav-links {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  }
+  .logos-nav-links.open { display: flex; }
+  .logos-nav-links li a {
+    height: auto;
+    line-height: normal;
+    padding: 0.9rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    border-left: 3px solid transparent;
+  }
+  .logos-nav-links li a:hover,
+  .logos-nav-links li a.active {
+    border-bottom-color: var(--border);
+    border-left-color: #111;
+  }
+}
 .page { display: none; }
 .page.active { display: block; }
 .subpage-hero {
@@ -793,7 +823,6 @@ footer {
   .stats-bar { gap: 2rem; }
   .danny-section { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .logos-nav-links { display: none; }
   .vakken-grid { grid-template-columns: 1fr !important; }
   .cta-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
 }
@@ -808,7 +837,8 @@ footer {
 <nav class="logos-nav">
   <div class="logos-nav-inner">
     <div class="logos-brand" onclick="showPage('home')">LOGOS</div>
-    <ul class="logos-nav-links">
+    <button class="logos-nav-toggle" id="navToggle" onclick="toggleMobileNav()">☰</button>
+    <ul class="logos-nav-links" id="navLinks">
       <li><a class="active" onclick="showPage('home')" id="nav-home">Home</a></li>
       <li><a onclick="showPage('theologie')" id="nav-theologie">Theologie</a></li>
       <li><a onclick="showPage('geschiedenis')" id="nav-geschiedenis">Geschiedenis</a></li>
