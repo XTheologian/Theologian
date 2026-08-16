@@ -454,7 +454,9 @@ a { text-decoration: none; color: inherit; }
 .danny-num-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
 .danny-section { transition: opacity 0.3s ease; }
 .danny-section.fading { opacity: 0; }
-
+.reviews-fade { transition: opacity 0.3s ease; }
+.reviews-fade.fading { opacity: 0; }
+  
 .tutor-dots {
   display: flex;
   justify-content: center;
@@ -1477,33 +1479,34 @@ footer {
   <div class="section" id="ervaringen">
   <div class="section-tag">Ervaringen</div>
   <h2 class="section-title">Trots op de feedback!</h2>
-  <p class="section-sub">Wat leerlingen en ouders zeggen over de begeleiding van Ingenieur Aaron.</p>
-  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+  <p class="section-sub">Wat leerlingen en ouders zeggen over de begeleiding van onze tutors.</p>
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;" class="reviews-fade" id="reviewsGrid">
     <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <p class="review-text">"Ingenieur Aaron legt scheikunde zo helder uit dat het eindelijk klikt. Hij combineert technische kennis met echte rust en geduld — daar word je als leerling echt beter van."</p>
+      <div class="review-stars" id="reviewStars0">★★★★★</div>
+      <p class="review-text" id="reviewText0"></p>
       <div class="review-author">
-        <div class="review-avatar">👧</div>
-        <div><div class="review-name">Anne B.</div><div class="review-info">Scheikunde & Natuurkunde</div></div>
+        <div class="review-avatar" id="reviewAvatar0"></div>
+        <div><div class="review-name" id="reviewName0"></div><div class="review-info" id="reviewInfo0"></div></div>
       </div>
     </div>
     <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <p class="review-text">"Wat Aaron uniek maakt is dat hij zowel bètavakken als alfavakken beheerst. Hij ziet verbanden die andere tutors missen."</p>
+      <div class="review-stars" id="reviewStars1">★★★★★</div>
+      <p class="review-text" id="reviewText1"></p>
       <div class="review-author">
-        <div class="review-avatar">🧑</div>
-        <div><div class="review-name">Jayden V.</div><div class="review-info">Bèta & Alfa vakken</div></div>
+        <div class="review-avatar" id="reviewAvatar1"></div>
+        <div><div class="review-name" id="reviewName1"></div><div class="review-info" id="reviewInfo1"></div></div>
       </div>
     </div>
     <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <p class="review-text">"Met zijn achtergrond in theologie en techniek brengt Ingenieur Aaron een perspectief dat verder gaat dan de stof."</p>
+      <div class="review-stars" id="reviewStars2">★★★★★</div>
+      <p class="review-text" id="reviewText2"></p>
       <div class="review-author">
-        <div class="review-avatar">👦</div>
-        <div><div class="review-name">Lucas M.</div><div class="review-info">Theologie & Wetenschap</div></div>
+        <div class="review-avatar" id="reviewAvatar2"></div>
+        <div><div class="review-name" id="reviewName2"></div><div class="review-info" id="reviewInfo2"></div></div>
       </div>
     </div>
   </div>
+  <div class="tutor-dots" id="reviewDots" style="margin-top:1.5rem;"></div>
 </div>
 
 <div class="section-gray" id="prijzen">
@@ -2012,6 +2015,61 @@ function nextTutor() {
 
 initTutorDots();
 setInterval(nextTutor, 5000);
+const reviewSets = [
+  [
+    { stars:'★★★★★', text:'"Joshua legt scheikunde zo helder uit dat het eindelijk klikt. Hij combineert technische kennis met echte rust en geduld — daar word je als leerling beter van."', avatar:'👧', name:'Anne B.', info:'Scheikunde bij Joshua M.' },
+    { stars:'★★★★★', text:'"Fleur laat je zelf de logica achter een proces ontdekken. Dat blijft veel beter hangen dan een rijtje uit je hoofd leren."', avatar:'🧑', name:'Jayden V.', info:'Biologie bij Fleur van B.' },
+    { stars:'★★★★★', text:'"Dankzij Daan snap ik eindelijk waaróm een formule werkt, in plaats van hem alleen maar te onthouden."', avatar:'👦', name:'Lucas M.', info:'Wiskunde bij Daan W.' }
+  ],
+  [
+    { stars:'★★★★★', text:'"Onze zoon zag altijd op tegen geschiedenis, maar Sophie maakt er een verhaal van dat blijft hangen. Zijn cijfers zijn flink gestegen."', avatar:'👩', name:'Marloes T.', info:'Ouder van leerling bij Sophie H.' },
+    { stars:'★★★★★', text:'"Milan legt economie uit als een serie keuzes in plaats van droge theorie. Ineens snap ik waarom de stof zo in elkaar zit."', avatar:'🧒', name:'Sem R.', info:'Economie bij Milan V.' },
+    { stars:'★★★★★', text:'"Joshua blijft geduldig, ook als iets drie keer uitgelegd moet worden. Mijn cijfer voor natuurkunde is met een hele punt gestegen."', avatar:'👧', name:'Noor K.', info:'Natuurkunde bij Joshua M.' }
+  ],
+  [
+    { stars:'★★★★★', text:'"Sophie ziet verbanden tussen geschiedenis en theologie die ik zelf nooit had opgemerkt. Daardoor blijft alles veel beter hangen."', avatar:'👦', name:'Finn de J.', info:'Theologie bij Sophie H.' },
+    { stars:'★★★★★', text:'"Als ouder waardeer ik vooral de heldere terugkoppeling van Daan na elke les — je weet precies waar je kind staat."', avatar:'👨', name:'Peter S.', info:'Ouder van leerling bij Daan W.' },
+    { stars:'★★★★★', text:'"Fleur weet scheikunde en biologie aan elkaar te koppelen op een manier die alles ineens logisch maakt."', avatar:'🧑', name:'Isa M.', info:'Biologie & Scheikunde bij Fleur van B.' }
+  ]
+];
+
+let reviewIndex = 0;
+
+function renderReviews(i) {
+  const set = reviewSets[i];
+  set.forEach((r, idx) => {
+    document.getElementById('reviewStars' + idx).textContent = r.stars;
+    document.getElementById('reviewText' + idx).textContent = r.text;
+    document.getElementById('reviewAvatar' + idx).textContent = r.avatar;
+    document.getElementById('reviewName' + idx).textContent = r.name;
+    document.getElementById('reviewInfo' + idx).textContent = r.info;
+  });
+  document.querySelectorAll('.review-dot').forEach((d, idx) => d.classList.toggle('active', idx === i));
+}
+
+function initReviewDots() {
+  const dotsEl = document.getElementById('reviewDots');
+  dotsEl.innerHTML = reviewSets.map((_, idx) => `<span class="tutor-dot review-dot${idx === 0 ? ' active' : ''}" onclick="goToReviewSet(${idx})"></span>`).join('');
+}
+
+function goToReviewSet(i) {
+  const grid = document.getElementById('reviewsGrid');
+  grid.classList.add('fading');
+  setTimeout(() => {
+    reviewIndex = i;
+    renderReviews(reviewIndex);
+    grid.classList.remove('fading');
+  }, 300);
+}
+
+function nextReviewSet() {
+  goToReviewSet((reviewIndex + 1) % reviewSets.length);
+}
+
+initReviewDots();
+renderReviews(0);
+setInterval(nextReviewSet, 5000);
+  
 
 const wizData = { onvoldoendes: null, richting: '', leerjaar: '', plan: null };
 
