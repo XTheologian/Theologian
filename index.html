@@ -1969,7 +1969,11 @@ function openModalPlan(plan) {
   document.getElementById('modal').classList.add('open');
 }
 function closeModal() { document.getElementById('modal').classList.remove('open'); }
-function showPage(name) {
+function toggleMobileNav() { document.getElementById('navLinks').classList.toggle('open'); }
+document.querySelectorAll('.logos-nav-links li a').forEach(link => {
+  link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+});
+  function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const page = document.getElementById('page-' + name);
   if(page) { page.classList.add('active'); }
