@@ -1950,7 +1950,7 @@ footer {
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <a href="mailto:xtheologian@gmail.com">xtheologian@gmail.com</a>
+        <a href="mailto:logosbijles@gmail.com">xtheologian@gmail.com</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -1989,7 +1989,7 @@ function stuurCtaEmail() {
   const naam = document.getElementById('ctaNaam').value.trim();
   const email = document.getElementById('ctaEmail').value.trim();
   if(!naam || !email) { alert('Vul je naam en e-mailadres in.'); return; }
-  window.location.href = 'mailto:xtheologian@gmail.com?subject=Proefles aanvraag&body=Naam: ' + naam + '%0AE-mail: ' + email;
+  window.location.href = 'mailto:logosbijles@gmail.com?subject=Proefles aanvraag&body=Naam: ' + naam + '%0AE-mail: ' + email;
 }
 function verstuurModal() {
   const naam       = document.getElementById('mVoornaam').value.trim();
@@ -2009,7 +2009,7 @@ function verstuurModal() {
     (abonnement ? 'Abonnement: ' + abonnement + '\n' : '') +
     '\nMet vriendelijke groet,\n' + naam
   );
-  window.location.href = 'mailto:xtheologian@gmail.com?subject=' + onderwerp + '&body=' + bericht;
+  window.location.href = 'mailto:logosbijles@gmail.com?subject=' + onderwerp + '&body=' + bericht;
   closeModal();
 }
 document.getElementById('modal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
@@ -2234,7 +2234,7 @@ function wizardSubmit() {
     (korting ? 'Kortingscode: ' + korting + '\n' : '')
   );
 
-  window.location.href = 'mailto:xtheologian@gmail.com?subject=' + onderwerp + '&body=' + bericht;
+  window.location.href = 'mailto:logosbijles@gmail.com?subject=' + onderwerp + '&body=' + bericht;
 }
 </script>
 </body>
